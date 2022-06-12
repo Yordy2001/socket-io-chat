@@ -1,9 +1,13 @@
 const express = require('express');
-const app = express();
 const http = require('http');
+const { Emitter } = require("@socket.io/postgres-emitter");
+
+const app = express();
 const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server);
+const {db} = require ("./db/models/")
+
 
 app.use(express.static('public'))
 app.use('/static',express.static('public'))
@@ -18,6 +22,7 @@ app.get('/', (req, res) => {
 //       console.log('message: ' + msg);
 //     });
 // });
+
 
 io.on('connection', (socket) => {
     socket.on('chat message', (msg) => {

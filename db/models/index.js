@@ -34,11 +34,21 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+// try {
+//   sequelize.authenticate();
+//   console.log('Connection has been established successfully.');
+// } catch (error) {
+//   console.error('Unable to connect to the database:', error);
+// }
+
 try {
-  await sequelize.authenticate();
-  console.log('Connection has been established successfully.');
+  sequelize.sync({
+    alter:true,
+    freezeTableName: true
+  })
+  console.log("All models were synchronized successfully.")
 } catch (error) {
-  console.error('Unable to connect to the database:', error);
+  console.log(error)
 }
 
 module.exports = db;
