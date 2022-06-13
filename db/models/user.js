@@ -11,7 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
-    //   User.hasMany()
+      User.hasMany(models.Chat, {
+        foreignKey:'chats',
+        onDelete:cascade
+      })
+      User.hasMany(models.Friends, {
+        foreignKey:'friends_tel',
+        onDelete:cascade
+      })
     }
   };
   User.init({

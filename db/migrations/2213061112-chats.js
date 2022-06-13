@@ -8,20 +8,15 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            nickname: {
-                type: Sequelize.STRING,
-                allowNull: false
+            user_messages:{
+                type: Sequelize.STRING
             },
-            tel: {
-                type: Sequelize.INTEGER,
-                allowNull: false
+            friends_messages:{
+                type: Sequelize.STRING
             },
-            portada: Sequelize.STRING,
-            info: Sequelize.STRING,
-
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE,
+                type: Sequelize.DATE
             },
             updatedAt: {
                 allowNull: false,
