@@ -41,14 +41,18 @@ db.Sequelize = Sequelize;
 //   console.error('Unable to connect to the database:', error);
 // }
 
-try {
-  sequelize.sync({
-    alter:true,
-    freezeTableName: true
-  })
-  console.log("All models were synchronized successfully.")
-} catch (error) {
-  console.log(error)
-}
+
+(async function () {
+  try {
+    await sequelize.sync({
+      alter: true,
+      freezeTableName: true
+    })
+    console.log("All models were synchronized successfully.")
+  } catch (error) {
+    console.log(error)
+  };
+})();
+
 
 module.exports = db;
