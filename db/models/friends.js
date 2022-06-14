@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
-      User.hasMany(models.User)
+      Friends.hasMany(models.Users)
+
+      Friends.hasMany(models.Chats)
     }
   };
   Friends.init({

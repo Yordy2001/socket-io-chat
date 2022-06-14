@@ -1,10 +1,10 @@
 const express = require('express');
 const http = require('http');
+const { Server } = require('socket.io');
 const { Emitter } = require("@socket.io/postgres-emitter");
 
 const app = express();
 const server = http.createServer(app);
-const { Server } = require('socket.io');
 const io = new Server(server);
 const {db} = require ("./db/models/")
 
