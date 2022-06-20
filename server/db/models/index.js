@@ -47,7 +47,7 @@ db.Sequelize = Sequelize;
       alter: true,
       freezeTableName: true
     })
-    console.log("All models were synchronized successfully.")
+    // console.log("All models were synchronized successfully.")
   } catch (error) {
     console.log(error)
   };

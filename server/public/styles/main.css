@@ -1,4 +1,4 @@
-*{
+/* *{
     margin: 0;
     padding: 0;
 }
@@ -55,4 +55,4 @@ header {
 }
 #messages > li:nth-child(odd) {
   background: #efefef;
-}
+} */
