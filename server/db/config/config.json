@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Yonmarlin1905",
+    "database": "chat-clone",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Yonmarlin1905",
+    "database": "chat-clone",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Yonmarlin1905",
+    "database": "chat-clone",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
