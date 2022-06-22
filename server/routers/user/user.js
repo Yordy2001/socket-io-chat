@@ -16,6 +16,3 @@ const register = (req, res) =>{
         }
     });
 }
-
-
-``
