@@ -1,0 +1,24 @@
+.chat-route{
+    background-color: rgb(17, 27, 33);
+    width: 100%;
+    height: 100%;
+}
+
+.chats-content img{
+    width: 2.1rem;
+}
+
+.chats-content{
+    padding: .8rem;
+    display: flex;
+}
+.chats-content p{
+    font-size: small;
+}
+.chats-content-right{
+    align-items: right;
+}
+.chats-name-msg{
+    padding-left: .5rem;
+    width: 70%;
+}
