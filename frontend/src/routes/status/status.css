@@ -1,0 +1,19 @@
+.status-page{
+    box-sizing: border-box;
+    height: 100vh;
+    max-height: 100vh;
+    background-color: rgb(17, 27, 33);
+}
+
+.mystatus{
+    margin-top: .5rem;
+    display: flex;
+    justify-content: space-evenly;
+}
+.status-description{
+    align-self: flex-start;
+    width: 60%;
+}
+.mystatus img{
+    width: 3rem;
+}

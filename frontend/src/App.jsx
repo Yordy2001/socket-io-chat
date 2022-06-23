@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
-import Home from './routes/home/home'
 
+import Home from './routes/home/home'
+import Status from './routes/status/status'
 
 function App() {
 
@@ -10,6 +11,11 @@ function App() {
         <Route
           path='/'
           element={ <Home /> }
+        /> 
+ 
+        <Route
+          path='/status'
+          element={ <Status /> }
         />  
 
         <Route path='*' element={<p>There's nothing here: 404!</p>} />
