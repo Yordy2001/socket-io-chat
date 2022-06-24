@@ -5,15 +5,51 @@
     background-color: rgb(17, 27, 33);
 }
 
-.mystatus{
-    margin-top: .5rem;
-    display: flex;
-    justify-content: space-evenly;
+.status-content{
+    margin: .6rem .6rem 0 .6rem ;
 }
+
+.mystatus{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .9rem;
+    align-items: flex-start;
+}
+
+.friend-status{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: .9rem;
+    align-items: flex-start;
+}
+
+.mystatus img,
+.friend-status img {
+    width: 3rem;
+}
+
+.friend-status .status-description{
+    margin-left: 1.3rem;
+    width: 90%;
+}
+
+.img-status-viewed{
+    border: 2px solid gray;
+    border-radius: 55px;
+}
+
+.img-status-no-viewed{
+    border: 2px solid rgb(0, 238, 20);
+    border-radius: 55px;
+}
+
 .status-description{
     align-self: flex-start;
     width: 60%;
 }
-.mystatus img{
-    width: 3rem;
+
+.h3-status{
+    font-size: small;
+    text-transform: capitalize;
+    margin: .5rem 0 .5rem 0;
 }

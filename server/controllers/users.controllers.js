@@ -1,13 +1,13 @@
 const bcript = require('bcrypt')
 const { User } = require('../db')
 
-const register = async(req, res) => {
+const register = async (req, res) => {
 
     const { full_name, tel, portada, info } = req.body
 
     try {
         const user = await User.findOne({
-            where: {tel: tel}
+            where: { tel: tel }
         })
         if (user) {
             return res.sendStatus(404)
