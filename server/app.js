@@ -25,12 +25,15 @@ app.get('/', (req, res) => {
 })
 
 io.on('connection', (socket) => {
+    socket.on('client:logged', (num)=>{
+        io.emit('server:')
+    })
     // socket.on('chat-message', (msg) => {
     //     io.emit('chat-message', msg);
     // });
 
 });
 
-server.listen(3000, () => {
-    console.log('listening on *:3000');
+server.listen(4000, () => {
+    console.log('listening on *:4000');
 })
