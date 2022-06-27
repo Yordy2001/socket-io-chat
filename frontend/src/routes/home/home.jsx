@@ -21,22 +21,6 @@ export default function Home() {
             portada: avatar,
             time: '1:18p.m',
             lastMessage: 'hola'
-        },
-        {
-            id: 2,
-            userName: "Yordy",
-            tel: "829-455-8758",
-            portada: avatar,
-            time: '1:18p.m',
-            lastMessage: 'hola'
-        },
-        {
-            id: 3,
-            userName: "Yordy",
-            tel: "829-455-8758",
-            portada: avatar,
-            time: '1:18p.m',
-            lastMessage: 'hola'
         }
     ])
 

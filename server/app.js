@@ -28,11 +28,6 @@ io.on('connection', (socket) => {
         console.log(num)
         io.emit('server:')
     })
-
-    // socket.on('client:user-online', (id)=>{
-    //    console.log(id)
-    // })
-
 });
 
 server.listen(4000, () => {
