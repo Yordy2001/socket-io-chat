@@ -18,4 +18,3 @@ const chats = async (msg) => {
 // const chats = async(msg)=>{
 //     await chats.findAll()
 // }
-

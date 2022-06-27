@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { SocketContext } from '../../context/socket'
 
 import '../../App.css'
 import './home.css'
@@ -7,6 +8,8 @@ import Header from '../../components/header/herder'
 import avatar from '../../assets/img/avatar.svg'
 
 export default function Home() {
+
+    const socket = useContext(SocketContext)
 
     const [chatId, setChatId] = useState(0)
     const [openMessage, setOpenMessage] = useState(false)
@@ -36,6 +39,13 @@ export default function Home() {
             lastMessage: 'hola'
         }
     ])
+
+    useEffect(() => {
+        socket.emit('client:logged', '8294558758')
+        socket.on('server:conneted', (socket)=>{
+            console.log(socket)
+        })
+    }, [socket])
 
     return (
         <>

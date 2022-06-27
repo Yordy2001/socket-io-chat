@@ -2,22 +2,21 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const bodyParser = require('body-parser')
-const cors = require('cors')
 
 const router = require('./routers/user.routes')
 //Server config 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors:{
+        origin: 'http://localhost:3000'
+    }
+});
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('public'))
 app.use('/static', express.static('public'))
-app.use(cors({
-    credentials: true,
-    origin: 'http://localhost:3000'
-}))
 app.use(router)
 
 app.get('/', (req, res) => {
@@ -26,11 +25,13 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.on('client:logged', (num)=>{
+        console.log(num)
         io.emit('server:')
     })
-    // socket.on('chat-message', (msg) => {
-    //     io.emit('chat-message', msg);
-    // });
+
+    // socket.on('client:user-online', (id)=>{
+    //    console.log(id)
+    // })
 
 });
 
