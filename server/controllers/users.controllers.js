@@ -3,7 +3,7 @@ const { User } = require('../db')
 
 const register = async(req, res) => {
 
-    const { full_name, tel, portada, info } = req.body
+    const { name, tel, portada, info } = req.body
 
     try {
         const user = await User.findOne({
@@ -16,10 +16,10 @@ const register = async(req, res) => {
         const hashTel = await bcript.hash(tel, 12)
 
         await User.create({
-            full_name,
+            full_name: name,
             tel: hashTel,
-            portada,
-            info
+            portada: 'null',
+            info:"hola"
         })
         res.sendStatus(201)
 
