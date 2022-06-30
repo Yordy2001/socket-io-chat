@@ -4,7 +4,7 @@ const { User } = require('../db')
 const register = async(req, res) => {
 
     const { name, tel, portada, info } = req.body
-
+    console.log(name, tel, portada, info)
     try {
         const user = await User.findOne({
             where: {tel: tel}
@@ -21,7 +21,7 @@ const register = async(req, res) => {
             portada: 'null',
             info:"hola"
         })
-        res.sendStatus(201)
+        res.status(201).json(name)
 
     } catch (error) {
         console.log(error)
