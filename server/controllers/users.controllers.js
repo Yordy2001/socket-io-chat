@@ -10,7 +10,7 @@ const register = async(req, res) => {
             where: {tel: tel}
         })
         if (user) {
-            return res.sendStatus(404)
+            return res.sendStatus(400)
         }
 
         const hashTel = await bcript.hash(tel, 12)
@@ -18,8 +18,8 @@ const register = async(req, res) => {
         await User.create({
             full_name: name,
             tel: hashTel,
-            portada: 'null',
-            info:"hola"
+            portada,
+            info
         })
         res.status(201).json(name)
 

@@ -41,7 +41,7 @@ export default function Home() {
                         ?
                         chats?.map(each => {
                             return (
-                                <div className='chats-content'>
+                                <div className='chats-content' key={each.id}>
                                     <img src={each.portada} alt="user picture" />
 
                                     <div className='chats-name-msg'>

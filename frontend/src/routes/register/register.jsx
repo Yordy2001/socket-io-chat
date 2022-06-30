@@ -1,6 +1,7 @@
 import React from 'react'
-import { useFormik } from 'formik'
 import axios from 'axios'
+import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom';
 
 import '../../App.css'
 import './register.css'
@@ -9,7 +10,7 @@ import { useState } from 'react'
 import portada from '../../assets/img/avatar.svg' 
 
 export default function Register() {
-
+    const navigate = useNavigate()
     const [first, setFirst] = useState(true)
     const formik = useFormik({
         initialValues: {
@@ -20,9 +21,11 @@ export default function Register() {
         },
         onSubmit: async (values) => {
             await axios.post('http://localhost:4000/register', values)
+            navigate('/')
         },
     })
     const handleForm = () => {
+        console.log("holaaaaaa")
         setFirst(!first)
     }
 
@@ -34,10 +37,8 @@ export default function Register() {
                 <form onSubmit={formik.handleSubmit}>
                     {
                         (first) ?
-
                             <>
                                 <input
-
                                     type="tel"
                                     name="tel"
                                     placeholder='Phone'
@@ -52,11 +53,10 @@ export default function Register() {
                                     onChange={formik.handleChange}
                                     value={formik.values.email} />
 
-                                <button className='btn-next' onClick={handleForm}>Next</button>
+                                <button className='btn-next' type='button' onClick={handleForm}>Next</button>
                             </>
                             :
                             <>
-                                <label htmlFor="portada" className='lbl-portada'></label>
                                 <input
                                     id="portada"
                                     type="file"
@@ -72,12 +72,11 @@ export default function Register() {
                                     placeholder='Info'
                                     onChange={formik.handleChange}
                                     value={formik.values.email} />
-                            
-                                <button onClick={handleForm}>opmit</button>
+        
+                                <button type='button' onClick={handleForm}>opmit</button>
                                 <button type='submit' className='btn-next' >Send</button>
                             </>            
                     }
-                    
                 </form>
             </div>
         </div>
