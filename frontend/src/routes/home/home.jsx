@@ -6,6 +6,7 @@ import './home.css'
 
 import Header from '../../components/header/herder'
 import avatar from '../../assets/img/avatar.svg'
+import Chats from '../../components/chats/chats'
 
 export default function Home() {
 
@@ -33,7 +34,8 @@ export default function Home() {
 
     return (
         <>
-            <Header></Header>
+            <Chats></Chats>
+            {/* <Header></Header>
             <div className='chat-route'>
                 {
                     chats
@@ -60,7 +62,9 @@ export default function Home() {
 
                         <h1>No hay Chats</h1>
                 }
-            </div>
+            </div> */}
+
         </>
+
     )
 }
