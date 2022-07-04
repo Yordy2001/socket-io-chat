@@ -7,28 +7,45 @@ import '../../App.css'
 import './register.css'
 import { useState } from 'react'
 
-import portada from '../../assets/img/avatar.svg' 
+import portada from '../../assets/img/avatar.svg'
 
 export default function Register() {
     const navigate = useNavigate()
     const [first, setFirst] = useState(true)
+    const [inputFile, setInputfile] = useState();
     const formik = useFormik({
         initialValues: {
             tel: '',
             name: '',
-            file: '',
+            portada: '',
             info: ''
         },
         onSubmit: async (values) => {
-            await axios.post('http://localhost:4000/register', values)
-            navigate('/')
+            const formData = new FormData();
+            try {
+                formData.set('avatar', inputFile)
+
+                for (let [key, value] of Object.entries(values)) {
+                    formData.set(key, value);
+                }
+
+                await axios.post('http://localhost:4000/register', formData)
+                navigate('/')
+            } catch (error) {
+                console.log(error)
+            }
+           
+           
         },
     })
-    const handleForm = () => {
-        console.log("holaaaaaa")
-        setFirst(!first)
+
+    const handleFile = (e) =>{
+        setInputfile(e.target.files?.[0]);
     }
 
+    const handleForm = () => {
+        setFirst(!first)
+    }
 
     return (
         <div className='register-page'>
@@ -57,25 +74,29 @@ export default function Register() {
                             </>
                             :
                             <>
+                                <label htmlFor="portada"><img src={portada} alt="" /></label>
                                 <input
+                                    onChange={handleFile}
                                     id="portada"
                                     type="file"
                                     name="portada"
                                     placeholder='Portada'
                                     className='input-file'
-                                    onChange={formik.handleChange}
-                                    value={formik.values.email} />
-                                <textarea
+                                    />
+
+                                <input
                                     id="info"
                                     type="text"
                                     name="info"
                                     placeholder='Info'
                                     onChange={formik.handleChange}
                                     value={formik.values.email} />
-        
-                                <button type='button' onClick={handleForm}>opmit</button>
-                                <button type='submit' className='btn-next' >Send</button>
-                            </>            
+                                
+                                <div className="form-buttons">
+                                    <button type='button' className='btn-opmit' onClick={handleForm} >opmit</button>
+                                    <button type='submit' className='btn-next' >Send</button>
+                                </div>
+                            </>
                     }
                 </form>
             </div>
