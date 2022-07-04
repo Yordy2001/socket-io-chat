@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { SocketContext } from '../../context/socket'
 
-import '../../App.css'
-import './home.css'
+// import '../../App.css'
+// import './home.css'
 
 import Header from '../../components/header/herder'
 import avatar from '../../assets/img/avatar.svg'

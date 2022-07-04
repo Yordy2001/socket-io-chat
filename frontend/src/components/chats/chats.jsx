@@ -2,8 +2,8 @@ import React, { useContext, useEffect  } from 'react'
 import { useState } from 'react'
 import { SocketContext } from '../../context/socket'
 
-import '../../App.css'
 import './chats.css'
+
 import portada from  '../../assets/img/avatar.svg'
 import arrow from '../../assets/img/arrow_left.svg'
 
@@ -15,8 +15,9 @@ export default function Chats() {
     const handleChange = (e)=>{
         setMessages(e.target.value)
     }
-    const handleSubmit = async (e)=>{
+    const handleSubmit = (e)=>{
         e.preventDefault()
+        console.log(messages)
         socket.emit('client:messages', messages)
     }
 
@@ -24,7 +25,7 @@ export default function Chats() {
         socket.on('server:messages', (msg)=>{
             console.log(msg)
         })
-    },[socket])
+    })
     
 
     return (
@@ -32,18 +33,17 @@ export default function Chats() {
             <div className="header">
                 <img src={arrow} alt="" />
                 <img src={portada} alt="" />
-                <div>
 
-                </div>
-                    <p>Yordy
+                <div>
+                    <p>Yordy </p>
                     <p>online</p>
-                </p>
+                </div>
             </div>
             <div className="chats-content">
 
             </div>
             <div className="form-message">
-                <form className='form'>
+                <form className='form-chats'>
                     <input type="text" placeholder='Message' onChange={handleChange}/>
                 </form>
                 <button className='btn-message' type='submit' onSubmit={handleSubmit}>send</button>

@@ -29,13 +29,12 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     socket.on('client:logged', (num)=>{
-        console.log(socket.id, socket.rooms)
         io.emit('server:logged', num)
     })
 
     socket.on("client:messages", (msg)=>{
         console.log(msg)
-        socket.emit("server:messages", msg)
+        io.emit("server:messages", msg)
     })
 });
 
