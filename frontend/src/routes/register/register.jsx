@@ -13,6 +13,7 @@ export default function Register() {
     const navigate = useNavigate()
     const [first, setFirst] = useState(true)
     const [inputFile, setInputfile] = useState();
+    
     const formik = useFormik({
         initialValues: {
             tel: '',
@@ -79,7 +80,7 @@ export default function Register() {
                                     onChange={handleFile}
                                     id="portada"
                                     type="file"
-                                    name="portada"
+                                    name="avatar"
                                     placeholder='Portada'
                                     className='input-file'
                                     />

@@ -4,29 +4,29 @@ const { User } = require('../db')
 const register = async(req, res) => {
 
     const { name, tel, info } = req.body
-    // const portada = req.file.filename
-    console.log(req.file)
-    // try {
-    //     const user = await User.findOne({
-    //         where: {tel: tel}
-    //     })
-    //     if (user) {
-    //         return res.sendStatus(409)
-    //     }
+    const portada = req.file.filename
 
-    //     const hashTel = await bcript.hash(tel, 12)
+    try {
+        const user = await User.findOne({
+            where: {tel: tel}
+        })
+        if (user) {
+            return res.sendStatus(409)
+        }
 
-    //     await User.create({
-    //         full_name: name,
-    //         tel: hashTel,
-    //         portada,
-    //         info
-    //     })
+        const hashTel = await bcript.hash(tel, 12)
+
+        await User.create({
+            full_name: name,
+            tel: hashTel,
+            portada,
+            info
+        })
         res.sendStatus(201)
 
-    // } catch (error) {
-    //     console.log(error)
-    // }
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const login = async (req, res) => {

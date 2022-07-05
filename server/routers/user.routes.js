@@ -5,7 +5,7 @@ const router = express.Router()
 
 const { register, login } = require('../controllers/users.controllers')
 
-router.post('/register', upload.single('portada'), register)
+router.post('/register', upload.single('avatar'), register)
 router.post('/login', login)
 
 module.exports = router
