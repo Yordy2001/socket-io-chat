@@ -43,7 +43,7 @@ export default function Chats() {
 
             </div>
             <div className="form-message">
-                <form className='form-chats'>
+                <form className='form-chats' onSubmit={handleSubmit}>
                     <input type="text" placeholder='Message' onChange={handleChange}/>
                 </form>
                 <button className='btn-message' type='submit' onSubmit={handleSubmit}>send</button>
