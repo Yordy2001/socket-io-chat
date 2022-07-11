@@ -10,14 +10,15 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            Message.belongsTo(models.Chats)
+            Message.belongsTo(models.Sala)
+            // Message.belongsTo(models.User)
         }
     };
     Message.init({
-        user_messages: DataTypes.STRING,
-        friends_message: DataTypes.STRING   
+        menssage: DataTypes.STRING  
     }, {
         sequelize,
+        freezeTableName: true,
         modelName: 'Message',
     });
     return Message;

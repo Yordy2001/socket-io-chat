@@ -8,25 +8,23 @@ import portada from  '../../assets/img/avatar.svg'
 import arrow from '../../assets/img/arrow_left.svg'
 
 export default function Chats() {
-    const [messages, setMessages] = useState("")
+    const [message, setMessage] = useState("")
+    const [messages, setMessages] = useState([])
     const socket = useContext(SocketContext)
 
-
     const handleChange = (e)=>{
-        setMessages(e.target.value)
+        setMessage(e.target.value)
     }
     const handleSubmit = (e)=>{
         e.preventDefault()
-        console.log(messages)
-        socket.emit('client:messages', messages)
+        socket.emit('client:messages', message)
     }
 
     useEffect(() => {
         socket.on('server:messages', (msg)=>{
-            console.log(msg)
+            setMessages([...msg, msg])
         })
-    })
-    
+    }, [])
 
     return (
         <div className='chats'>
@@ -39,7 +37,17 @@ export default function Chats() {
                     <p>online</p>
                 </div>
             </div>
-            <div className="chats-content">
+            <div className="messages-content">
+                <div className='msg-block'>
+                    {
+                        messages.map((msg, key) => {
+                            return<div key={key}>
+                                <p className='messsge user-msg'>{msg.message}</p>
+                            </div>
+                        })
+                    }
+                </div>
+      
 
             </div>
             <div className="form-message">

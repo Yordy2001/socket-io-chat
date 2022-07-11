@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
 
-      User.hasMany(models.Chats)
+      User.hasMany(models.Sala)
       // User.hasMany(models.user_contacts, {
       //   foreignKey:"friends_tel",
       //   onDelete:'CASCADE'
@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     info: DataTypes.STRING,
   }, {
     sequelize,
+    freezeTableName: true,
     modelName: 'User',
   });
   return User;
