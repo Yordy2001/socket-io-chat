@@ -3,8 +3,9 @@ const { User } = require('../db')
 
 const register = async(req, res) => {
 
-    const { name, tel, portada, info } = req.body
-    console.log(name, tel, portada, info)
+    const { name, tel, info } = req.body
+    const portada  =  req.file.filename
+   
     try {
         const user = await User.findOne({
             where: {tel: tel}
@@ -21,7 +22,7 @@ const register = async(req, res) => {
             portada,
             info
         })
-        res.status(201).json(name)
+        res.status(201).json({msg:`usuario ${name} registrado` })
 
     } catch (error) {
         console.log(error)
