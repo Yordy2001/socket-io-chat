@@ -30,11 +30,11 @@ export default function Register() {
                     formData.set(key, value);
                 }
                 await axios.post('http://localhost:4000/register', formData)
+                navigate('/login')
 
             } catch (error) {
 
             }
-            navigate('/')
         },
     })
     const handleForm = () => {

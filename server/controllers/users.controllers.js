@@ -19,7 +19,7 @@ const register = async(req, res) => {
         await User.create({
             full_name: name,
             tel: hashTel,
-            portada,
+            portada: portada,
             info
         })
         res.status(201).json({msg:`usuario ${name} registrado` })
@@ -30,14 +30,17 @@ const register = async(req, res) => {
 }
 
 const login = async (req, res) => {
-    const { tel } = req.body
+    const { tel, name } = req.body
 
     try {
-        const user = await User.findOne({ where: tel })
+        const user = await User.findOne({ 
+            where: {full_name: name }
+        })
         const isMatch = await bcript.compare(tel, user.tel)
 
         if (!user || !isMatch) {
-            res.sendStatus(400)
+            console.log("error")
+            return res.sendStatus(400)
         }
 
         res.status(200).json(user)
