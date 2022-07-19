@@ -34,8 +34,8 @@ export default function Home() {
 
     return (
         <>
-            <Chats></Chats>
-            {/* <Header></Header>
+            {/* <Chats></Chats> */}
+            <Header></Header>
             <div className='chat-route'>
                 {
                     chats
@@ -62,7 +62,7 @@ export default function Home() {
 
                         <h1>No hay Chats</h1>
                 }
-            </div> */}
+            </div>
 
         </>
 
