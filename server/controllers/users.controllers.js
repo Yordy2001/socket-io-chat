@@ -39,7 +39,6 @@ const login = async (req, res) => {
         const isMatch = await bcript.compare(tel, user.tel)
 
         if (!user || !isMatch) {
-            console.log("error")
             return res.sendStatus(400)
         }
 

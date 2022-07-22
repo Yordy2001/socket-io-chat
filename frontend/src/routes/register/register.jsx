@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 import './register.css'
 
-import portada from '../../assets/img/avatar.svg'
-
 export default function Register() {
 
     const navigate = useNavigate()
