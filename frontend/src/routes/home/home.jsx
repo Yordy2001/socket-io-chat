@@ -26,7 +26,7 @@ export default function Home() {
 
     useEffect(() => {
         socket.emit('client:logged', '8294558758')
-        socket.on('server:conneted', (socket)=>{
+        socket.on('server:conneted', (socket) => {
             console.log(socket)
         })
     }, [socket])
