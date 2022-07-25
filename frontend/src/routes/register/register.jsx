@@ -18,7 +18,8 @@ export default function Register() {
         initialValues: {
             tel: '',
             name: '',
-            info: ''
+            info: '',
+            password: ''
         },
         onSubmit: async (values) => {
             try {
@@ -65,6 +66,13 @@ export default function Register() {
                                     required
                                     onChange={formik.handleChange}
                                     value={formik.values.name} />
+                                <input
+                                    type="password"
+                                    name="password"
+                                    placeholder='Password'
+                                    required
+                                    onChange={formik.handleChange}
+                                    value={formik.values.password} />
 
                                 <button className='btn-next' type='button' onClick={handleForm}>Next</button>
                             </>

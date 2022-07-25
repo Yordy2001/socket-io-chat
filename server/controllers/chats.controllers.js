@@ -1,11 +1,10 @@
-const { Chats } = require('../db')
+const { User } = require('../db')
 
-const chats = async(tel)=>{
+const chats = async (tel)=>{
+    console.log("entro a los chats")
     try {
-        const chats =  await Chats.getAll({
-            where:tel
-        })
-        io.emit("server:messages", chats)
+        const user =  await User.findAll()
+        io.emit("server:chats", user)
     } catch (error) {
         console.log(error)
     }

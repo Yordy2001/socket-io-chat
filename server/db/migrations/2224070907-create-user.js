@@ -16,6 +16,7 @@ module.exports = {
                 type: Sequelize.STRING(12),
                 allowNull: false
             },
+            password: Sequelize.STRING,
             portada: Sequelize.STRING,
             info: Sequelize.STRING,
 

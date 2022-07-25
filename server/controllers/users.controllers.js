@@ -3,7 +3,7 @@ const { User } = require('../db')
 
 const register = async(req, res) => {
 
-    const { name, tel, info } = req.body
+    const { name, tel, info, password } = req.body
     const portada  =  req.file.filename
    
     try {
@@ -14,11 +14,12 @@ const register = async(req, res) => {
             return res.sendStatus(400)
         }
 
-        const hashTel = await bcript.hash(tel, 12)
+        const hashPassword = await bcript.hash(password, 12)
 
         await User.create({
             full_name: name,
-            tel: hashTel,
+            tel: tel,
+            password: hashPassword,
             portada: portada,
             info
         })
@@ -30,18 +31,19 @@ const register = async(req, res) => {
 }
 
 const login = async (req, res) => {
-    const { tel, name } = req.body
+    const { tel, password } = req.body
 
     try {
         const user = await User.findOne({ 
-            where: {full_name: name }
+            where: {tel: tel }
         })
-        const isMatch = await bcript.compare(tel, user.tel)
+        const isMatch = await bcript.compare(password, user.password)
 
         if (!user || !isMatch) {
             return res.sendStatus(400)
         }
 
+        req.user = user
         res.status(200).json(user)
     } catch (error) {
         console.log(error)
