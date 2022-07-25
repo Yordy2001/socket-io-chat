@@ -26,8 +26,8 @@ export default function Home() {
     ])
 
     useEffect(() => {
-        socket.emit('client:logged', '8294558758')
-        socket.on('server:conneted', (socket)=>{
+        socket.emit('client:chats', '8294558758')
+        socket.on('server:chats', (socket)=>{
             console.log(socket)
         })
     }, [socket])

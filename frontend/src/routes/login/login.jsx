@@ -1,7 +1,9 @@
-import React  from 'react'
+import React, { useContext }  from 'react'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom';
+
+import { SocketContext } from '../../context/socket'
 
 import '../../App.css'
 import './login.css'
@@ -9,15 +11,17 @@ import './login.css'
 export default function Login() {
 
     const navigate = useNavigate()
+    const socket = useContext(SocketContext)
 
     const formik = useFormik({
         initialValues: {
             tel: '',
-            name: '',
+            password: '',
         },
         onSubmit: async (values) => {
             try {
                 await axios.post('http://localhost:4000/login', values)
+                socket.emit('client:logged', values.tel)
                 localStorage.setItem('chat-session' , JSON.stringify(true))
                 navigate('/')
 
@@ -41,12 +45,12 @@ export default function Login() {
                         onChange={formik.handleChange}
                         value={formik.values.tel} />
                     <input
-                        type="text"
-                        name="name"
-                        placeholder='Name'
+                        type="password"
+                        name="password"
+                        placeholder='Password'
                         required
                         onChange={formik.handleChange}
-                        value={formik.values.name} />
+                        value={formik.values.password} />
 
                     <button className='btn-next' type='submit' >Enviar</button>
                 </form>
