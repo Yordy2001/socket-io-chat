@@ -6,6 +6,7 @@ const cors = require('cors')
 
 const router = require('./routers/user.routes');
 const chats = require('./controllers/chats.controllers')
+const { User } = require('./db')
 
 //Server config 
 const app = express();
@@ -31,14 +32,25 @@ app.get('/', (req, res) => {
 io.on('connection', (socket) => {
     
     socket.on('client:logged', (num)=>{
+        console.log(num)
         socket.join(num)
         io.emit('server:logged', num)
     })
     
-    socket.on("client:chats", chats)
+    socket.on("client:chats", async (tel)=>{
+        console.log("entro a los chats")
+        try {
+            const user =  await User.findAll()
+            io.emit("server:chats", user)
+        } catch (error) {
+            console.log(error)
+        }
+        
+    })
 
     socket.on("client:messages", (msg)=>{
-        // io.to(msg.tel).emit("server:messages", chats)
+        const {tel, message} = msg
+        io.to(tel).emit("server:messages", message)
     })
 });
 

@@ -7,7 +7,7 @@ import './chats.css'
 import portada from  '../../assets/img/avatar.svg'
 import arrow from '../../assets/img/arrow_left.svg'
 
-export default function Chats() {
+export default function Chats(tel) {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
     const socket = useContext(SocketContext)
@@ -15,23 +15,25 @@ export default function Chats() {
     const handleChange = (e)=>{
         setMessage(e.target.value)
     }
+
     const handleSubmit = (e)=>{
         e.preventDefault()
-        socket.emit('client:messages', message)
+        socket.emit('client:messages', {message, tel:tel.id})
     }
 
     useEffect(() => {
+        console.log(tel)
         socket.on('server:messages', (msg)=>{
-            setMessages([...msg, msg])
+            console.log(msg)
+            // setMessages([...msg, msg])
         })
-    }, [])
+    }, [socket])
 
     return (
         <div className='chats'>
             <div className="header">
                 <img src={arrow} alt="" />
                 <img src={portada} alt="" />
-
                 <div>
                     <p>Yordy </p>
                     <p>online</p>
@@ -47,8 +49,6 @@ export default function Chats() {
                         })
                     }
                 </div>
-      
-
             </div>
             <div className="form-message">
                 <form className='form-chats' onSubmit={handleSubmit}>

@@ -5,64 +5,68 @@ import '../../App.css'
 import './home.css'
 
 import Header from '../../components/header/herder'
-import avatar from '../../assets/img/avatar.svg'
 import Chats from '../../components/chats/chats'
 
 export default function Home() {
 
     const socket = useContext(SocketContext)
 
-    const [chatId, setChatId] = useState(0)
+    const [openChat, setOpenChat] = useState({
+        open: false,
+        chatId: 0
+    })
     const [openMessage, setOpenMessage] = useState(false)
-    const [chats, setChats] = useState([
-        {
-            id: 1,
-            userName: "Yordy",
-            tel: "829-455-8758",
-            portada: avatar,
-            time: '1:18p.m',
-            lastMessage: 'hola'
-        }
-    ])
+    const [chats, setChats] = useState([])
 
     useEffect(() => {
         socket.emit('client:chats', '8294558758')
-        socket.on('server:chats', (socket)=>{
-            console.log(socket)
+        socket.on('server:chats', (socket) => {
+            setChats(socket)
         })
     }, [socket])
 
     return (
         <>
-            {/* <Chats></Chats> */}
-            <Header></Header>
-            <div className='chat-route'>
-                {
-                    chats
+            {
+                openChat.open ?
+                    <Chats
+                        id={openChat?.chatId}
+                    />
+                    :
+                <>
+                <Header></Header>
+                <div className='chat-route'>
+                    {
+                        chats
 
-                        ?
-                        chats?.map(each => {
-                            return (
-                                <div className='chats-content' key={each.id}>
-                                    <img src={each.portada} alt="user picture" />
+                            ?
+                            chats?.map(each => {
+                                return (
+                                    <div className='chats-content' key={each.id} onClick={()=>setOpenChat( {open:true, chatId:each.tel} )}>
+                                        <img src={`http://localhost:4000/uploads/${each.portada}`} alt="user picture" />
 
-                                    <div className='chats-name-msg'>
-                                        <h3>{each.userName}</h3>
-                                        <p>{each.lastMessage}</p>
+                                        <div className='chats-name-msg'>
+                                            <h3>{each.full_name}</h3>
+                                            {/* <p>{each.lastMessage}</p> */}
+                                        </div>
+
+                                        <div className='chats-content-right'>
+                                            {/* <p>{each.time}</p> */}
+                                            <p>8</p>
+                                        </div>
                                     </div>
+                                )
+                            })
+                            :
 
-                                    <div className='chats-content-right'>
-                                        <p>{each.time}</p>
-                                        <p>8</p>
-                                    </div>
-                                </div>
-                            )
-                        })
-                        :
+                            <h1>No hay Chats</h1>
+                    }
+                </div>
+                </>
 
-                        <h1>No hay Chats</h1>
-                }
-            </div>
+            }
+
+
 
         </>
 
