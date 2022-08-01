@@ -5,7 +5,7 @@ const register = async(req, res) => {
 
     const { name, tel, info, password } = req.body
     const portada  =  req.file.filename
-   
+
     try {
         const user = await User.findOne({
             where: {tel: tel}
@@ -32,6 +32,7 @@ const register = async(req, res) => {
 
 const login = async (req, res) => {
     const { tel, password } = req.body
+    console.log(req.session)
 
     try {
         const user = await User.findOne({ 
@@ -43,11 +44,18 @@ const login = async (req, res) => {
             return res.sendStatus(400)
         }
 
-        req.user = user
+        req.session.isAuth = true
+        req.session.user = user
         res.status(200).json(user)
     } catch (error) {
         console.log(error)
     }
 }
 
-module.exports = { register, login }
+const logOut = (req, res) =>{
+    req.session.isAuth = false
+    res.sendStatus(200)
+    return
+}
+
+module.exports = { register, login, logOut }

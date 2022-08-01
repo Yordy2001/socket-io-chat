@@ -3,9 +3,11 @@ const http = require('http');
 const { Server } = require('socket.io');
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const cookieParse = require('cookie-parser')
+const cookieSession = require('./utils/cookie')
 
+const authMiddleware = require('./middleware/authenticate')
 const router = require('./routers/user.routes');
-const chats = require('./controllers/chats.controllers')
 const { User } = require('./db')
 
 //Server config 
@@ -17,27 +19,29 @@ const io = new Server(server, {
     }
 });
 
+app.set('trust proxy', 1) //cookie config
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.static('public'))
 app.use('/static', express.static('public'))
 app.use(cors({ origin: '*' }))
-    
-app.use(router)
+app.use(cookieParse())
+app.use(cookieSession)
+
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 })
+app.use(router)
 
 
 io.on('connection', (socket) => {
     
     socket.on('client:logged', (num)=>{
-        console.log(num)
         socket.join(num)
         io.emit('server:logged', num)
     })
     
-    socket.on("client:chats", async (tel)=>{
+    socket.on("client:chats",  async (tel)=>{
         console.log("entro a los chats")
         try {
             const user =  await User.findAll()
@@ -50,6 +54,7 @@ io.on('connection', (socket) => {
 
     socket.on("client:messages", (msg)=>{
         const {tel, message} = msg
+        console.log(message)
         io.to(tel).emit("server:messages", message)
     })
 });
