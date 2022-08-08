@@ -22,10 +22,8 @@ export default function Chats(tel) {
     }
 
     useEffect(() => {
-        console.log(tel)
         socket.on('server:messages', (msg)=>{
-            console.log(msg)
-            // setMessages([...msg, msg])
+            setMessages([msg])
         })
     }, [socket])
 
@@ -41,13 +39,13 @@ export default function Chats(tel) {
             </div>
             <div className="messages-content">
                 <div className='msg-block'>
-                    {
+                    {/* {
                         messages.map((msg, key) => {
                             return<div key={key}>
                                 <p className='messsge user-msg'>{msg.message}</p>
                             </div>
                         })
-                    }
+                    } */}
                 </div>
             </div>
             <div className="form-message">

@@ -54,7 +54,6 @@ io.on('connection', (socket) => {
 
     socket.on("client:messages", (msg)=>{
         const {tel, message} = msg
-        console.log(message)
         io.to(tel).emit("server:messages", message)
     })
 });
