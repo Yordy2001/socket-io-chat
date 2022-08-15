@@ -10,9 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // Sala.hasMany(models.sala_type)
       Sala.hasMany(models.Message)
-
+      Sala.hasMany(models.sala_usuario)
     }
   };
   Sala.init({

@@ -10,8 +10,6 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            Message.belongsTo(models.Sala)
-            // Message.belongsTo(models.User)
         }
     };
     Message.init({
