@@ -8,7 +8,7 @@ const cookieSession = require('./utils/cookie')
 
 const authMiddleware = require('./middleware/authenticate')
 const router = require('./routers/user.routes');
-const { User } = require('./db')
+const { User, Sala } = require('./db')
 
 //Server config 
 const app = express();
@@ -42,7 +42,6 @@ io.on('connection', (socket) => {
     })
     
     socket.on("client:chats",  async (tel)=>{
-        console.log("entro a los chats")
         try {
             const user =  await User.findAll()
             io.emit("server:chats", user)

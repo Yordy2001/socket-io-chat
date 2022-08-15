@@ -1,5 +1,5 @@
 const bcript = require('bcrypt')
-const { User } = require('../db')
+const { User, sala_usuario } = require('../db')
 
 const register = async(req, res) => {
 
@@ -15,6 +15,10 @@ const register = async(req, res) => {
         }
 
         const hashPassword = await bcript.hash(password, 12)
+
+        await sala_usuario.create({
+            UserId: user.id
+        })
 
         await User.create({
             full_name: name,
@@ -32,7 +36,6 @@ const register = async(req, res) => {
 
 const login = async (req, res) => {
     const { tel, password } = req.body
-    console.log(req.session)
 
     try {
         const user = await User.findOne({ 

@@ -11,7 +11,6 @@ export default function Chats(tel) {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
     const socket = useContext(SocketContext)
-
     const handleChange = (e)=>{
         setMessage(e.target.value)
     }
@@ -23,10 +22,9 @@ export default function Chats(tel) {
 
     useEffect(() => {
         socket.on('server:messages', (msg)=>{
-            setMessages([msg])
+            setMessages([...msg, msg])
         })
     }, [socket])
-
     return (
         <div className='chats'>
             <div className="header">
@@ -40,7 +38,7 @@ export default function Chats(tel) {
             <div className="messages-content">
                 <div className='msg-block'>
                     {/* {
-                        messages.map((msg, key) => {
+                        messages?.map((msg, key) => {
                             return<div key={key}>
                                 <p className='messsge user-msg'>{msg.message}</p>
                             </div>
