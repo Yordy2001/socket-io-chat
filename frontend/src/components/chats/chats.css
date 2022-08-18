@@ -74,10 +74,11 @@
     height: auto;
     width: fit-content;
     font-size: 1rem;
-    background-color: bisque;
+    /* background-color: bisque; */
     margin-bottom: .5rem;
     
 } 
 .user-msg {
-
+    font-size: large;
+    font-weight: bold;
 }

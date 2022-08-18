@@ -1,6 +1,7 @@
 import React, { useContext, useEffect  } from 'react'
 import { useState } from 'react'
 import { SocketContext } from '../../context/socket'
+import { useNavigate } from 'react-router-dom';
 
 import './chats.css'
 
@@ -8,42 +9,46 @@ import portada from  '../../assets/img/avatar.svg'
 import arrow from '../../assets/img/arrow_left.svg'
 
 export default function Chats(tel) {
+    const socket = useContext(SocketContext)
+    const navigate = useNavigate()
+
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
-    const socket = useContext(SocketContext)
+
+    socket.on('server:messages', (msg)=>{
+        setMessages([...messages, msg])
+        
+    })
+
     const handleChange = (e)=>{
         setMessage(e.target.value)
     }
 
     const handleSubmit = (e)=>{
+        console.log(messages);
         e.preventDefault()
         socket.emit('client:messages', {message, tel:tel.id})
     }
 
-    useEffect(() => {
-        socket.on('server:messages', (msg)=>{
-            setMessages([...msg, msg])
-        })
-    }, [socket])
     return (
         <div className='chats'>
             <div className="header">
-                <img src={arrow} alt="" />
+                <img src={arrow} alt="" onClick={()=>{navigate('/')}}/>
                 <img src={portada} alt="" />
                 <div>
-                    <p>Yordy </p>
+                    <p>Yordy</p>
                     <p>online</p>
                 </div>
             </div>
             <div className="messages-content">
                 <div className='msg-block'>
-                    {/* {
+                    {
                         messages?.map((msg, key) => {
                             return<div key={key}>
-                                <p className='messsge user-msg'>{msg.message}</p>
+                                <h2 className='messsge user-msg'>{msg}</h2>
                             </div>
                         })
-                    } */}
+                    }
                 </div>
             </div>
             <div className="form-message">
@@ -52,7 +57,6 @@ export default function Chats(tel) {
                 </form>
                 <button className='btn-message' type='submit' onSubmit={handleSubmit}>send</button>
             </div>
-           
         </div>
     )
 }

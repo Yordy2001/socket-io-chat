@@ -35,9 +35,10 @@ app.use(router)
 
 
 io.on('connection', (socket) => {
-    
+    let numero
     socket.on('client:logged', (num)=>{
         socket.join(num)
+        numero = num
         io.emit('server:logged', num)
     })
     
@@ -53,7 +54,7 @@ io.on('connection', (socket) => {
 
     socket.on("client:messages", (msg)=>{
         const {tel, message} = msg
-        io.to(tel).emit("server:messages", message)
+        io.to(tel).to(numero).emit("server:messages", message)
     })
 });
 
