@@ -25,7 +25,6 @@ export default function Chats(tel) {
     }
 
     const handleSubmit = (e)=>{
-        console.log(messages);
         e.preventDefault()
         socket.emit('client:messages', {message, tel:tel.id})
     }

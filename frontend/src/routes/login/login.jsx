@@ -22,7 +22,7 @@ export default function Login() {
             try {
                 await axios.post('http://localhost:4000/login', values)
                 socket.emit('client:logged', values.tel)
-                localStorage.setItem('chat-session' , JSON.stringify(true))
+                localStorage.setItem('chat-session' , JSON.stringify({ auth:true, num:values.tel }))
                 navigate('/')
 
             } catch (error) {

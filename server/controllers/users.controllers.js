@@ -4,21 +4,22 @@ const { User, sala_usuario } = require('../db')
 const register = async(req, res) => {
 
     const { name, tel, info, password } = req.body
-    const portada  =  req.file.filename
-
+    const portada  =  req.file?.filename
+    
     try {
         const user = await User.findOne({
             where: {tel: tel}
         })
+
         if (user) {
             return res.sendStatus(400)
         }
 
         const hashPassword = await bcript.hash(password, 12)
 
-        await sala_usuario.create({
-            UserId: user.id
-        })
+        // await sala_usuario.create({
+        //     UserId: user.id
+        // })
 
         await User.create({
             full_name: name,

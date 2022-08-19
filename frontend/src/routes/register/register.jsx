@@ -12,7 +12,7 @@ export default function Register() {
     const formData = new FormData()
 
     const [first, setFirst] = useState(true)
-    const [file, setFile] = useState('')
+    const [file, setFile] = useState()
 
     const formik = useFormik({
         initialValues: {
