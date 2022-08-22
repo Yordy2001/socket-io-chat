@@ -24,13 +24,16 @@ export default function Home() {
             setChats(socket)
         })
     }, [socket])
-
+    const handleChat = ()=>{
+        setOpenChat(!openChat.open)
+    }
     return (
         <>
             {
                 openChat.open ?
                     <Chats
                         id={openChat?.chatId}
+                        handleOpen={handleChat}
                     />
                     :
                 <>

@@ -10,9 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      user_contacts.hasMany(models.User)
     }
   };
   user_contacts.init({
+    friendsID: DataTypes.STRING,
   }, {
     sequelize,
     freezeTableName: true,

@@ -1,5 +1,5 @@
 const bcript = require('bcrypt')
-const { User, sala_usuario } = require('../db')
+const { User, sala_usuario, user_contacts } = require('../db')
 
 const register = async (req, res) => {
 
@@ -62,4 +62,24 @@ const logOut = (req, res) =>{
     return
 }
 
-module.exports = { register, login, logOut }
+const getFriends = async (req, res) => {
+    // const user =  req.session.user
+    let user = 3
+    const friendsId = await user_contacts.findAll({
+        raw: true,
+        attributes: ['id'],
+        where: {
+            UserId:user
+        }     
+    })
+    const friends = await User.findAll({
+        raw: true,
+        where: {
+            id: ['2', '4']
+        }
+    })
+    console.log(friendsId[1]);
+    res.send(friends)
+}
+
+module.exports = { register, login, logOut, getFriends }

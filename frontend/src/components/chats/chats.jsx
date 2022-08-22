@@ -1,16 +1,15 @@
 import React, { useContext, useEffect  } from 'react'
 import { useState } from 'react'
 import { SocketContext } from '../../context/socket'
-import { useNavigate } from 'react-router-dom';
 
 import './chats.css'
 
 import portada from  '../../assets/img/avatar.svg'
 import arrow from '../../assets/img/arrow_left.svg'
 
-export default function Chats(tel) {
+export default function Chats(props) {
+
     const socket = useContext(SocketContext)
-    const navigate = useNavigate()
 
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
@@ -26,13 +25,13 @@ export default function Chats(tel) {
 
     const handleSubmit = (e)=>{
         e.preventDefault()
-        socket.emit('client:messages', {message, tel:tel.id})
+        socket.emit('client:messages', {message, tel:props.id})
     }
 
     return (
         <div className='chats'>
             <div className="header">
-                <img src={arrow} alt="" onClick={()=>{navigate('/')}}/>
+                <img src={arrow} alt="" onClick={()=>{props.handleOpen()}}/>
                 <img src={portada} alt="" />
                 <div>
                     <p>Yordy</p>
