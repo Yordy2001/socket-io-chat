@@ -6,7 +6,6 @@ const cors = require('cors')
 const cookieParse = require('cookie-parser')
 const cookieSession = require('./utils/cookie')
 
-const authMiddleware = require('./middleware/authenticate')
 const router = require('./routers/user.routes');
 const { User, Sala, Message } = require('./db')
 
@@ -31,6 +30,7 @@ app.use(cookieSession)
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 })
+
 app.use(router)
 
 

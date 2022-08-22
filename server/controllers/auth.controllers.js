@@ -1,5 +1,5 @@
 const bcript = require('bcrypt')
-const { User, sala_usuario } = require('../db')
+const { User } = require('../db')
 
 const register = async(req, res) => {
 
@@ -16,10 +16,6 @@ const register = async(req, res) => {
         }
 
         const hashPassword = await bcript.hash(password, 12)
-
-        // await sala_usuario.create({
-        //     UserId: user.id
-        // })
 
         await User.create({
             full_name: name,

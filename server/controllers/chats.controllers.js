@@ -1,14 +1,35 @@
-const { User } = require('../db')
+const { json } = require('body-parser');
+const { User, user_contacts, chats } = require('../db')
 
-const chats = async (tel)=>{
-    console.log("entro a los chats")
+const getFriends = async(req, res) => {
+    const { tel } = req.params
+    
     try {
-        const user =  await User.findAll()
-        // io.emit("server:chats", user)
+        
+        const friends = await user_contacts.findAll({
+            attributes: ['id']
+        })
+        const user = await User.findAll({
+            where: {id: friends}
+        })
+        res.status(200).send(user)
+
     } catch (error) {
         console.log(error)
     }
-    
 }
 
-module.exports = chats
+
+const message = async (req, res) => {
+    try {
+        const messages = await chats.findAll(
+            {where:req.id}
+        )
+        return res.status(200).json(messages)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+module.exports = { getFriends, message }
