@@ -1,27 +1,34 @@
 const bcript = require('bcrypt')
-const { User } = require('../db')
+const { User, sala_usuario } = require('../db')
 
 const register = async (req, res) => {
 
-    const { full_name, tel, portada, info } = req.body
-
+    const { name, tel, info, password } = req.body
+    const portada  =  req.file?.filename
+    
     try {
         const user = await User.findOne({
             where: { tel: tel }
         })
+
         if (user) {
-            return res.sendStatus(404)
+            return res.sendStatus(400)
         }
 
-        const hashTel = await bcript.hash(tel, 12)
+        const hashPassword = await bcript.hash(password, 12)
+
+        // await sala_usuario.create({
+        //     UserId: user.id
+        // })
 
         await User.create({
-            full_name,
-            tel: hashTel,
-            portada,
+            full_name: name,
+            tel: tel,
+            password: hashPassword,
+            portada: portada,
             info
         })
-        res.sendStatus(201)
+        res.status(201).json({msg:`usuario ${name} registrado` })
 
     } catch (error) {
         console.log(error)
@@ -29,20 +36,30 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { tel } = req.body
+    const { tel, password } = req.body
 
     try {
-        const user = await User.findOne({ where: tel })
-        const isMatch = await bcript.compare(tel, user.tel)
+        const user = await User.findOne({ 
+            where: {tel: tel }
+        })
+        const isMatch = await bcript.compare(password, user.password)
 
         if (!user || !isMatch) {
-            res.sendStatus(400)
+            return res.sendStatus(400)
         }
 
+        req.session.isAuth = true
+        req.session.user = user
         res.status(200).json(user)
     } catch (error) {
         console.log(error)
     }
 }
 
-module.exports = { register, login }
+const logOut = (req, res) =>{
+    req.session.isAuth = false
+    res.sendStatus(200)
+    return
+}
+
+module.exports = { register, login, logOut }

@@ -3,25 +3,20 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Chats extends Model {
+  class user_contacts extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-
-      // Chats.hasMany(models.Users, {
-      //   foreignKey: 'user_message',
-      //   targetKey:'user_message'
-      // })
-      Chats.hasMany(models.Message)
     }
   };
-  Chats.init({
+  user_contacts.init({
   }, {
     sequelize,
-    modelName: 'Chats',
+    freezeTableName: true,
+    modelName: 'user_contacts',
   });
-  return Chats;
+  return user_contacts;
 };
