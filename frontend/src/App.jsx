@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './routes/home/home'
 import Login from './routes/login/login'
 import Register from './routes/register/register'
+import Status from './routes/status/status'
 import PrivateRouter from './utils/protectedRoute'
 
 
