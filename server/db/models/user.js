@@ -10,25 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      User.hasMany(models.sala_usuario)
+      User.hasMany(models.Message)
+      User.hasMany(models.user_contacts)
 
-      User.hasMany(models.Chats)
-      // User.hasMany(models.user_contacts, {
-      //   foreignKey:"friends_tel",
-      //   onDelete:'CASCADE'
-      // })
-      // User.hasMany(models.Friends, {
-      //   foreignKey:'tel',
-      //   onDelete:'CASCADE'
-      // })
     }
   };
   User.init({
     full_name: DataTypes.STRING,
     tel: DataTypes.STRING,
+    password: DataTypes.STRING,
     portada: DataTypes.STRING,
     info: DataTypes.STRING,
   }, {
     sequelize,
+    freezeTableName: true,
     modelName: 'User',
   });
   return User;

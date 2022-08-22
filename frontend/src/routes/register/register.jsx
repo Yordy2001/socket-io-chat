@@ -1,34 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom';
 
 import '../../App.css'
 import './register.css'
-import { useState } from 'react'
-
-import portada from '../../assets/img/avatar.svg' 
 
 export default function Register() {
+
     const navigate = useNavigate()
+    const formData = new FormData()
+
     const [first, setFirst] = useState(true)
+    const [file, setFile] = useState()
+
     const formik = useFormik({
         initialValues: {
             tel: '',
             name: '',
-            file: '',
-            info: ''
+            info: '',
+            password: ''
         },
         onSubmit: async (values) => {
-            await axios.post('http://localhost:4000/register', values)
-            navigate('/')
+            try {
+                formData.set("portada", file)
+
+                for (let [key, value] of Object.entries(values)) {
+                    formData.set(key, value);
+                }
+                await axios.post('http://localhost:4000/register', formData)
+                navigate('/login')
+
+            } catch (error) {
+
+            }
         },
     })
     const handleForm = () => {
-        console.log("holaaaaaa")
         setFirst(!first)
     }
 
+    const handleFile = (e) => {
+        setFile(e.target.files?.[0]);
+    }
 
     return (
         <div className='register-page'>
@@ -44,14 +58,21 @@ export default function Register() {
                                     placeholder='Phone'
                                     required
                                     onChange={formik.handleChange}
-                                    value={formik.values.email} />
+                                    value={formik.values.tel} />
                                 <input
                                     type="text"
                                     name="name"
                                     placeholder='Name'
                                     required
                                     onChange={formik.handleChange}
-                                    value={formik.values.email} />
+                                    value={formik.values.name} />
+                                <input
+                                    type="password"
+                                    name="password"
+                                    placeholder='Password'
+                                    required
+                                    onChange={formik.handleChange}
+                                    value={formik.values.password} />
 
                                 <button className='btn-next' type='button' onClick={handleForm}>Next</button>
                             </>
@@ -63,8 +84,8 @@ export default function Register() {
                                     name="portada"
                                     placeholder='Portada'
                                     className='input-file'
-                                    onChange={formik.handleChange}
-                                    value={formik.values.email} />
+                                    onChange={handleFile}
+                                />
                                 <textarea
                                     id="info"
                                     type="text"
@@ -72,10 +93,10 @@ export default function Register() {
                                     placeholder='Info'
                                     onChange={formik.handleChange}
                                     value={formik.values.email} />
-        
+
                                 <button type='button' onClick={handleForm}>opmit</button>
                                 <button type='submit' className='btn-next' >Send</button>
-                            </>            
+                            </>
                     }
                 </form>
             </div>
