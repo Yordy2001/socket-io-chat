@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from './routes/home/home'
 import Login from './routes/login/login'
 import Register from './routes/register/register'
+import Status from './routes/status/status'
 import PrivateRouter from './utils/protectedRoute'
 
 
@@ -20,6 +21,11 @@ function App() {
         />
 
         <Route
+          path='/status'
+          element={ <Status /> }
+        />  
+
+        <Route
           path='/register'
           element={<Register />}
         />
@@ -28,6 +34,7 @@ function App() {
           path='/login'
           element={<Login />}
         />
+
 
         <Route path='*' element={<p>There's nothing here: 404!</p>} />
       </Routes>
