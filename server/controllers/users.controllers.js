@@ -23,9 +23,9 @@ const register = async (req, res) => {
 
         await User.create({
             full_name: name,
-            tel: tel,
+            tel,
             password: hashPassword,
-            portada: portada,
+            portada,
             info
         })
         res.status(201).json({msg:`usuario ${name} registrado` })

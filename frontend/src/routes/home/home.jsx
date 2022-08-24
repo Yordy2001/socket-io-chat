@@ -46,7 +46,7 @@ export default function Home() {
                             chats?.map(each => {
                                 return (
                                     <div className='chats-content' key={each.id} onClick={()=>setOpenChat( {open:true, chatId:each.tel} )}>
-                                        <img src={`http://localhost:4000/uploads/${each.portada}`} alt="user picture" />
+                                        <img src={'http://localhost:4000/uploads/'+each.portada} alt="user picture" />
 
                                         <div className='chats-name-msg'>
                                             <h3>{each.full_name}</h3>
