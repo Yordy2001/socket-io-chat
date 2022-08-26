@@ -32,7 +32,7 @@ export default function Register() {
                 navigate('/login')
 
             } catch (error) {
-
+                console.log(error);
             }
         },
     })
@@ -49,55 +49,51 @@ export default function Register() {
             <div className='form-content'>
                 <h1>Register</h1>
                 <form onSubmit={formik.handleSubmit}>
-                    {
-                        (first) ?
-                            <>
-                                <input
-                                    type="tel"
-                                    name="tel"
-                                    placeholder='Phone'
-                                    required
-                                    onChange={formik.handleChange}
-                                    value={formik.values.tel} />
-                                <input
-                                    type="text"
-                                    name="name"
-                                    placeholder='Name'
-                                    required
-                                    onChange={formik.handleChange}
-                                    value={formik.values.name} />
-                                <input
-                                    type="password"
-                                    name="password"
-                                    placeholder='Password'
-                                    required
-                                    onChange={formik.handleChange}
-                                    value={formik.values.password} />
+                    <input
+                        type="tel"
+                        name="tel"
+                        placeholder='Phone'
+                        autoComplete='off'
+                        required
+                        onChange={formik.handleChange}
+                        value={formik.values.tel} />
+                    <input
+                        type="text"
+                        name="name"
+                        autoComplete='off'
+                        placeholder='Name'
+                        required
+                        onChange={formik.handleChange}
+                        value={formik.values.name} />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder='Password'
+                        autoComplete='off'
+                        required
+                        onChange={formik.handleChange}
+                        value={formik.values.password} />
 
-                                <button className='btn-next' type='button' onClick={handleForm}>Next</button>
-                            </>
-                            :
-                            <>
-                                <input
-                                    id="portada"
-                                    type="file"
-                                    name="portada"
-                                    placeholder='Portada'
-                                    className='input-file'
-                                    onChange={handleFile}
-                                />
-                                <textarea
-                                    id="info"
-                                    type="text"
-                                    name="info"
-                                    placeholder='Info'
-                                    onChange={formik.handleChange}
-                                    value={formik.values.email} />
+                    <input
+                        id="portada"
+                        type="file"
+                        name="portada"
+                        placeholder='Portada'
+                        autoComplete='off'
+                        className='input-file'
+                        onChange={handleFile}
+                    />
+                    <textarea
+                        id="info"
+                        type="text"
+                        name="info"
+                        placeholder='Info'
+                        autoComplete='off'
+                        onChange={formik.handleChange}
+                        value={formik.values.email} />
 
-                                <button type='button' onClick={handleForm}>opmit</button>
-                                <button type='submit' className='btn-next' >Send</button>
-                            </>
-                    }
+                    <button type='button' onClick={handleForm}>opmit</button>
+                    <button type='submit' className='btn-next' >Send</button>
                 </form>
             </div>
         </div>

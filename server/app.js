@@ -22,8 +22,8 @@ const io = new Server(server, {
 app.set('trust proxy', 1) //cookie config
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(express.static('public'))
 app.use('/static', express.static('public'))
+app.use('/uploads', express.static('uploads'))
 app.use(cors({ origin: '*' }))
 app.use(cookieParse())
 app.use(cookieSession)
@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
             // }],
             where:{SalaId:3}
         })
-        console.log(messages);
+
         io.to(tel).to(numero).emit("server:messages", message)
     })
 });
