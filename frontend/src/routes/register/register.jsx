@@ -74,8 +74,6 @@ export default function Register() {
                         onChange={formik.handleChange}
                         value={formik.values.password} />
 
-                    {/* <button className='btn-next' type='button' onClick={handleForm}>Next</button> */}
-
                     <input
                         id="portada"
                         type="file"
