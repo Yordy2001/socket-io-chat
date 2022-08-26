@@ -32,7 +32,7 @@ export default function Login() {
     })
 
     return (
-        <div className='register-page'>
+        <div className='login-page'>
             <div className='form-content'>
                 <h1>Login</h1>
                 <form onSubmit={formik.handleSubmit}>
