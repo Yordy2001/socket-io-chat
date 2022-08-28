@@ -9,7 +9,7 @@
 img{
     width: 100%;
 }
-.register-image{
+.register-presentation{
     display: none;
 }
 
@@ -80,22 +80,19 @@ label img{
 }
 
 @media (min-width: 768px) and (max-width: 1024px){
+    .register-page{
+        display: flex;
+        width: 100%;
+        height: 100vh;
+        box-sizing: border-box;
+        background: linear-gradient(to right bottom, whitesmoke 50%, #464953 50%);
+    }
     .form-content{
         width: 25rem;
         margin: auto;
         padding: 1rem;   
-        background: linear-gradient(to right bottom, #464953 52%,  whitesmoke  48%);
-        color: white;
-    }
-    .form-content h1{
-        color: white;
-    }
-    .form-content form input{
-        color: white;
-    }
-    .form-content form input:focus{
-        border: none;
-        outline: solid 2px green;
+        border: #464953 solid 2px;
+        color: rgb(54, 54, 54);
     }
 }
   
@@ -106,25 +103,77 @@ label img{
         width: 100%;
         height: 100vh;
         box-sizing: border-box;
-        background: linear-gradient(to right, whitesmoke 50%, #464953 50%);
+        background: linear-gradient(to right, #464953 50%,  whitesmoke 50%);
+        align-items: center;
     }
-
-    .register-image{
-        display: flex;
-        padding: 1rem;
-        width: 45%;
-    }
-
     .form-content{
-        border-radius: 1rem;
-        width: 25rem;
-        margin: auto;
+        width: 50%;
+    }
+    .register-presentation{
+        text-align: center;
+        width: 50%;
         padding: 1rem;
-        background-color: whitesmoke;
+        display: block;
+    }
+    .register-presentation h3{
+        color: black;
+        font-family:Verdana, Geneva, Tahoma, sans-serif ;
+    }
+
+    .register-presentation .register-image{
+        width: 100%;
     }
 }
   
 /* Media Query for Large screens */
 @media (min-width: 1281px) {
+    .register-page{
+        display: flex;
+        width: 100%;
+        height: 100vh;
+        box-sizing: border-box;
+        background: linear-gradient(to right, #464953 50%,  whitesmoke 50%);
+        align-items: center;
+    }
+    .form-content{
+        height: 100%;
+        width: 55%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .register-presentation{
+        text-align: center;
+        width: 45%;
+        padding: 1rem;
+        display: block;
+    }
+    .register-presentation h3{
+        color: white;
+        font-family:Verdana, Geneva, Tahoma, sans-serif ;
+    }
 
+    .register-presentation .register-image{
+        width: 100%;
+    }
+    label img{
+        display: block;
+        margin: auto;
+        width: 10rem;
+    }
+    .form-content .register-form{
+        width: 30rem;
+        height: 30rem;
+    }
+    
+    .form-content form input, textarea{
+        border: solid 1px;
+        font-size: 1.2rem;
+        background: #7f8188d2;
+        margin-top: 1rem;
+    }
+    .buttons-container{
+        width: 100%;
+    }
 }

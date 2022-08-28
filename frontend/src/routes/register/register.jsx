@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../App.css'
 import './register.css'
 import avatar from '.././../assets/img/avatar.svg'
-import loginSvg from '../../assets/img/login-image.svg'
+import loginSvg from '../../assets/img/app-logo-hey.svg'
 
 export default function Register() {
 
@@ -44,12 +44,15 @@ export default function Register() {
 
     return (
         <div className='register-page'>
-            <div className='register-image'>
-                <img src={loginSvg} alt="login image" />
+            <div className='register-presentation'>
+                <div className='register-image'>
+                    <img src={loginSvg} alt="login image" />
+                </div>
+                <h3>Conectate con todos en cualquier logar!</h3>
             </div>
             <div className='form-content'>
                 <h1>Register</h1>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit} className='register-form'>
                 <input
                         id="portada"
                         type="file"
