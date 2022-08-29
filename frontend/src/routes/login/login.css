@@ -102,15 +102,16 @@ label{
 
     .form-content-login{
         border-radius: 1rem;
-        width: 25rem;
+        width: 50vh;
         margin: auto;
         padding: 1rem;
         background-color: whitesmoke;
-        border-top-left-radius: 80px;
-        /* border-style: dashed; */
-        /* background: linear-gradient(to right bottom, transparent 50%, whitesmoke  50%); */
+    }
+    .buttons-container .btn-next{
+        padding: .5rem;
     }
 }
+
   
 /* Media Query for Laptops and Desktops */
 @media (min-width: 1025px) and (max-width: 1280px){

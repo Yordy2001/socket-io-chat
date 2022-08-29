@@ -48,7 +48,7 @@ export default function Register() {
                 <div className='register-image'>
                     <img src={loginSvg} alt="login image" />
                 </div>
-                <h3>Conectate con todos en cualquier logar!</h3>
+                <h3>Conectate con todos en cualquier lugar!</h3>
             </div>
             <div className='form-content'>
                 <h1>Register</h1>
