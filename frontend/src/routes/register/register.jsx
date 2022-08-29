@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 import '../../App.css'
 import './register.css'
+import avatar from '.././../assets/img/avatar.svg'
+import loginSvg from '../../assets/img/app-logo-hey.svg'
 
 export default function Register() {
 
     const navigate = useNavigate()
     const formData = new FormData()
 
-    const [first, setFirst] = useState(true)
     const [file, setFile] = useState()
 
     const formik = useFormik({
@@ -36,9 +37,6 @@ export default function Register() {
             }
         },
     })
-    const handleForm = () => {
-        setFirst(!first)
-    }
 
     const handleFile = (e) => {
         setFile(e.target.files?.[0]);
@@ -46,9 +44,28 @@ export default function Register() {
 
     return (
         <div className='register-page'>
+            <div className='register-presentation'>
+                <div className='register-image'>
+                    <img src={loginSvg} alt="login image" />
+                </div>
+                <h3>Conectate con todos en cualquier lugar!</h3>
+            </div>
             <div className='form-content'>
                 <h1>Register</h1>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit} className='register-form'>
+                <input
+                        id="portada"
+                        type="file"
+                        name="portada"
+                        placeholder='Portada'
+                        autoComplete='off'
+                        className='input-file'
+                        onChange={handleFile}
+                    />
+                    <label htmlFor="portada" className='lbl-portada'>
+                        <img src={avatar} alt="input avatar" />
+                    </label>
+
                     <input
                         type="tel"
                         name="tel"
@@ -74,15 +91,6 @@ export default function Register() {
                         onChange={formik.handleChange}
                         value={formik.values.password} />
 
-                    <input
-                        id="portada"
-                        type="file"
-                        name="portada"
-                        placeholder='Portada'
-                        autoComplete='off'
-                        className='input-file'
-                        onChange={handleFile}
-                    />
                     <textarea
                         id="info"
                         type="text"
@@ -92,8 +100,10 @@ export default function Register() {
                         onChange={formik.handleChange}
                         value={formik.values.email} />
 
-                    <button type='button' onClick={handleForm}>opmit</button>
-                    <button type='submit' className='btn-next' >Send</button>
+                    <div className="buttons-container">
+                        <button type='button' className='btn-next' onClick={()=>{navigate('/register')}}>Login</button>
+                        <button type='submit' className='btn-next' >Register</button>
+                    </div>
                 </form>
             </div>
         </div>
