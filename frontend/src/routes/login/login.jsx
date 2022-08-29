@@ -4,7 +4,7 @@ import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom';
 
 import { SocketContext } from '../../context/socket'
-import loginSvg from '../../assets/img/login-image.svg'
+import loginSvg from '../../assets/img/app-logo-hey.svg'
 
 import './login.css'
 import '../../App.css'
@@ -34,12 +34,15 @@ export default function Login() {
 
     return (
         <div className='login-page'>
-            <div className='login-image'>
-                <img src={loginSvg} alt="login image" />
+            <div className='login-description'>
+                <h2>Welcome Back</h2>
+                <div className='login-image'>
+                    <img src={loginSvg} alt="login image" />
+                </div>
             </div>
             <div className='form-content-login'>
                 <h1>Login</h1>
-                <form onSubmit={formik.handleSubmit}>
+                <form onSubmit={formik.handleSubmit} className='form-login'>
                     <input
                         type="tel"
                         name="tel"
@@ -56,7 +59,7 @@ export default function Login() {
                         value={formik.values.password} />
                     <div className='buttons-container'>
                         <button className='btn-next' type='button' onClick={()=>{navigate('/register')}} > Register</button>
-                        <button className='btn-next' type='submit' >LOGIN</button>
+                        <button className='btn-next' type='submit' >Login</button>
                     </div>
                 </form>
             </div>
