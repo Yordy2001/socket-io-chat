@@ -6,9 +6,8 @@ const cors = require('cors')
 const cookieParse = require('cookie-parser')
 const cookieSession = require('./utils/cookie')
 
-const authMiddleware = require('./middleware/authenticate')
 const router = require('./routers/user.routes');
-const { User, Sala, Message } = require('./db')
+const { User, Message } = require('./db')
 
 //Server config 
 const app = express();
@@ -19,14 +18,14 @@ const io = new Server(server, {
     }
 });
 
+app.use(cookieParse())
+app.use(cookieSession)
 app.set('trust proxy', 1) //cookie config
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/static', express.static('public'))
 app.use('/uploads', express.static('uploads'))
 app.use(cors({ origin: '*' }))
-app.use(cookieParse())
-app.use(cookieSession)
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')

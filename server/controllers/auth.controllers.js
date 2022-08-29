@@ -1,5 +1,5 @@
 const bcript = require('bcrypt')
-const { User, sala_usuario, user_contacts } = require('../db')
+const { User, user_contacts } = require('../db')
 
 const register = async (req, res) => {
 
@@ -48,8 +48,8 @@ const login = async (req, res) => {
             return res.sendStatus(400)
         }
 
-        req.session.isAuth = true
         req.session.user = user
+        req.session.isAuth = true
         res.status(200).json(user)
     } catch (error) {
         console.log(error)
