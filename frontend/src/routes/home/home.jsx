@@ -15,7 +15,6 @@ export default function Home() {
         open: false,
         chatId: 0
     })
-    const [openMessage, setOpenMessage] = useState(false)
     const [chats, setChats] = useState([])
 
     useEffect(() => {

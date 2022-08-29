@@ -43,8 +43,12 @@ h6 {
     padding: 1rem 1rem .5rem 1rem;
 }
 
-.icons_header {
+.icons-header {
     display: flex;
+}
+
+.icons-header img {
+    cursor: pointer;
 }
 
 .header-component nav {
@@ -86,7 +90,6 @@ h6 {
 .form_search input {
     position: relative;
     width: 90%;
-    /* padding: .2rem; */
     background: none;
     border: none;
     color: rgba(240, 248, 255, 0.918);
@@ -109,4 +112,26 @@ h6 {
 .arrow-left img {
     color: rgba(240, 248, 255, 0.918);
     width: 2.2rem;
+}
+
+.btn-setting {
+    display: block;
+    height: auto;
+    width: 9rem;
+    padding: .5rem;
+    position: absolute;
+    right: .9rem;
+    top: 1.7rem;
+    background: rgb(61, 74, 88);
+}
+
+.btn-setting button {
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    display: block;
+    margin-bottom: .5rem;
+    padding: 1rem;
+    width: 100%;
 }

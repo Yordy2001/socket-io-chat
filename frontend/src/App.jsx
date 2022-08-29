@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from './routes/home/home'
 import Login from './routes/login/login'
+import Profile from './routes/profile/profile'
 import Register from './routes/register/register'
 import Status from './routes/status/status'
 import PrivateRouter from './utils/protectedRoute'
@@ -19,6 +20,11 @@ function App() {
             </PrivateRouter>
           }
         />
+
+        <Route
+          path='/profile'
+          element={ <Profile /> }
+        />  
 
         <Route
           path='/status'
