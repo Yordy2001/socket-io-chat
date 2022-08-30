@@ -6,31 +6,38 @@ const cors = require('cors')
 const cookieParse = require('cookie-parser')
 const cookieSession = require('./utils/cookie')
 
-const authMiddleware = require('./middleware/authenticate')
 const router = require('./routers/user.routes');
-const { User, Sala, Message } = require('./db')
+const { User, Message } = require('./db')
 
 //Server config 
 const app = express();
+app.set('trust proxy', 1) //cookie config
+
+
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors:{
-        origin: '*'
+   cors:{
+        credentials: true,
+        origin: 'http://localhost:3000'
     }
 });
 
-app.set('trust proxy', 1) //cookie config
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/static', express.static('public'))
 app.use('/uploads', express.static('uploads'))
-app.use(cors({ origin: '*' }))
 app.use(cookieParse())
+app.use(cors({
+    credentials: true,
+    origin: 'http://localhost:3000'
+}))
 app.use(cookieSession)
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
 })
+
+// Set routes
 app.use(router)
 
 

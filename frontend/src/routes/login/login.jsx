@@ -21,7 +21,7 @@ export default function Login() {
         },
         onSubmit: async (values) => {
             try {
-                await axios.post('http://localhost:4000/login', values)
+                await axios.post('http://localhost:4000/login', values, {withCredentials: true})
                 socket.emit('client:logged', values.tel)
                 localStorage.setItem('chat-session' , JSON.stringify({ auth:true, num:values.tel }))
                 navigate('/')

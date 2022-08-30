@@ -1,5 +1,5 @@
 const bcript = require('bcrypt')
-const { User, sala_usuario, user_contacts } = require('../db')
+const { User, user_contacts } = require('../db')
 
 const register = async (req, res) => {
 
@@ -45,11 +45,11 @@ const login = async (req, res) => {
         const isMatch = await bcript.compare(password, user.password)
 
         if (!user || !isMatch) {
-            return res.sendStatus(400)
+            return res.status(400).json({msg:'Credentials incorrect'})
         }
 
-        req.session.isAuth = true
         req.session.user = user
+        req.session.isAuth = true
         res.status(200).json(user)
     } catch (error) {
         console.log(error)
@@ -78,7 +78,6 @@ const getFriends = async (req, res) => {
             id: ['2', '4']
         }
     })
-    console.log(friendsId[1]);
     res.send(friends)
 }
 
