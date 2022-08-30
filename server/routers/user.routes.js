@@ -13,6 +13,6 @@ router.post('/login', login)
 router.post('/logout', logOut)
 
 router.get('/friends', getFriends)
-router.get('/profile', authMiddleware ,getUser)
+router.get('/profile', authMiddleware, getUser)
 
 module.exports = router

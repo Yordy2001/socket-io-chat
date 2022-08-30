@@ -1,6 +1,6 @@
 
 module.exports = async(req, res, next ) =>{
-    console.log(req.session.isAuth);
+
     try {
         if(req.session.isAuth){
             await next()

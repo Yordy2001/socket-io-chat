@@ -45,7 +45,7 @@ const login = async (req, res) => {
         const isMatch = await bcript.compare(password, user.password)
 
         if (!user || !isMatch) {
-            return res.sendStatus(400)
+            return res.status(400).json({msg:'Credentials incorrect'})
         }
 
         req.session.user = user
@@ -78,7 +78,6 @@ const getFriends = async (req, res) => {
             id: ['2', '4']
         }
     })
-    console.log(friendsId[1]);
     res.send(friends)
 }
 
