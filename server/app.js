@@ -4,34 +4,29 @@ const { Server } = require('socket.io');
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const cookieParse = require('cookie-parser')
-const cookieSession = require('./utils/cookie')
+const expressSession = require('./utils/cookie')
 
 const router = require('./routers/user.routes');
 const { User, Message } = require('./db')
 
 //Server config 
 const app = express();
-app.set('trust proxy', 1) //cookie config
 
 
 const server = http.createServer(app);
-const io = new Server(server, {
-   cors:{
-        credentials: true,
-        origin: 'http://localhost:3000'
-    }
-});
 
+
+app.set('trust proxy', 1) //cookie config
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
 app.use('/static', express.static('public'))
 app.use('/uploads', express.static('uploads'))
+app.use(bodyParser.json())
 app.use(cookieParse())
 app.use(cors({
     credentials: true,
     origin: 'http://localhost:3000'
 }))
-app.use(cookieSession)
+app.use(expressSession)
 
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html')
@@ -40,37 +35,59 @@ app.get('/', (req, res) => {
 // Set routes
 app.use(router)
 
+const io = new Server(server, {
+    cors: {
+        credentials: true,
+        origin: 'http://localhost:3000'
+    }
+});
+
+const wrap = middleware => (socket, next) => middleware(socket.request, {}, next)
+
+io.use(wrap(expressSession))
+
+
+// only allow authenticated users
+io.use((socket, next) => {
+    const session = socket.request.session;
+    if (session) {
+        next();
+    } else {
+        next(new Error("unauthorized"));
+    }
+});
 
 io.on('connection', (socket) => {
     let numero
-    socket.on('client:logged', (num)=>{
+    socket.on('client:logged', (num) => {
         socket.join(num)
         numero = num
         io.emit('server:logged', num)
     })
 
-    socket.on("client:chats",  async (tel)=>{
+    socket.on("client:chats", async (tel) => {
+        console.log("entro a los chats");
         try {
-            const user =  await User.findAll()
+            const user = await User.findAll()
             io.emit("server:chats", user)
         } catch (error) {
             console.log(error)
-        }  
+        }
     })
 
-    socket.on("client:messages", async(msg)=>{
-        const {tel, message} = msg
+    socket.on("client:messages", async (msg) => {
+        const { tel, message } = msg
 
         const user = await User.findOne({
-            where:{tel:tel}
+            where: { tel: tel }
         })
-        
+
         let messages = await Message.findAll({
             // include: [{
             //     model: User,
             //     where: { UserId : user.id }
             // }],
-            where:{SalaId:3}
+            where: { SalaId: 3 }
         })
 
         io.to(tel).to(numero).emit("server:messages", message)

@@ -1,8 +1,8 @@
-const cookieSession = require('cookie-session')
+const expressSession = require('express-session')
 
-module.exports = cookieSession({
-    name: 'session',
-    keys: ['key1', 'key2'],
-    signed: false,
-    expires: new Date(Date.now() + 8 * 3600000)
+module.exports = expressSession({
+    secret: 'session-chat',
+    aveUninitialized: false,
+    cookie: { secure: false, maxAge:
+        new Date(Date.now() + 8 * 3600000)}
 })

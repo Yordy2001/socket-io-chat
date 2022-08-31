@@ -48,8 +48,8 @@ const login = async (req, res) => {
             return res.status(400).json({msg:'Credentials incorrect'})
         }
 
-        req.session.user = user
-        req.session.isAuth = true
+        // req.session.user = user
+        req.session.authenticated = true;
         res.status(200).json(user)
     } catch (error) {
         console.log(error)
@@ -57,13 +57,12 @@ const login = async (req, res) => {
 }
 
 const logOut = (req, res) =>{
-    req.session.isAuth = false
+    req.session.authenticated = false
     res.sendStatus(200)
     return
 }
 
 const getFriends = async (req, res) => {
-    // const user =  req.session.user
     let user = 3
     const friendsId = await user_contacts.findAll({
         raw: true,
