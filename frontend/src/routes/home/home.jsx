@@ -24,9 +24,11 @@ export default function Home() {
             setChats(socket)
         })
     }, [socket])
+
     const handleChat = ()=>{
         setOpenChat(!openChat.open)
     }
+
     return (
         <>
             {

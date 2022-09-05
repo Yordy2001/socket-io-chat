@@ -14,6 +14,8 @@ export default function Chats(props) {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
 
+    let {num} = JSON.parse(localStorage.getItem('chat-session'))
+
     socket.on('server:messages', (msg)=>{
         setMessages([...messages, msg])
         
@@ -25,7 +27,7 @@ export default function Chats(props) {
 
     const handleSubmit = (e)=>{
         e.preventDefault()
-        socket.emit('client:messages', {message, tel:props.id})
+        socket.emit('client:messages', {message, tel:props.id})  
     }
 
     return (
@@ -39,15 +41,15 @@ export default function Chats(props) {
                 </div>
             </div>
             <div className="messages-content">
-                <div className='msg-block'>
+                {/* <div className='msg-block'> */}
                     {
                         messages?.map((msg, key) => {
                             return<div key={key}>
-                                <h2 className='messsge user-msg'>{msg}</h2>
+                                <p className= {`messsge ${num == msg.tel ? 'user-msg': 'friend-msg'}`}>{msg.message}</p>
                             </div>
                         })
                     }
-                </div>
+                {/* </div> */}
             </div>
             <div className="form-message">
                 <form className='form-chats' onSubmit={handleSubmit}>

@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
             where:{SalaId:3}
         })
 
-        io.to(tel).to(numero).emit("server:messages", message)
+        io.to(tel).to(numero).emit("server:messages", msg)
     })
 });
 
