@@ -1,4 +1,4 @@
-import React, { useContext, useEffect  } from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react'
 import { SocketContext } from '../../context/socket'
 
@@ -6,6 +6,7 @@ import './chats.css'
 
 import portada from  '../../assets/img/avatar.svg'
 import arrow from '../../assets/img/arrow_left.svg'
+import send from '../../assets/icon/icons8-send-25.png'
 
 export default function Chats(props) {
 
@@ -17,8 +18,8 @@ export default function Chats(props) {
     let {num} = JSON.parse(localStorage.getItem('chat-session'))
 
     socket.on('server:messages', (msg)=>{
-        setMessages([...messages, msg])
-        
+        console.log(msg);
+        setMessages([...messages, msg.data])
     })
 
     const handleChange = (e)=>{
@@ -44,8 +45,8 @@ export default function Chats(props) {
                 {/* <div className='msg-block'> */}
                     {
                         messages?.map((msg, key) => {
-                            return<div key={key}>
-                                <p className= {`messsge ${num == msg.tel ? 'user-msg': 'friend-msg'}`}>{msg.message}</p>
+                            return<div className='msg-block' key={key}>
+                                <p className= {`messsge ${num === msg.tel ? 'friend-msg' : 'user-msg'}`}>{msg.message}</p>
                             </div>
                         })
                     }
@@ -55,7 +56,9 @@ export default function Chats(props) {
                 <form className='form-chats' onSubmit={handleSubmit}>
                     <input type="text" placeholder='Message' onChange={handleChange}/>
                 </form>
-                <button className='btn-message' type='submit' onSubmit={handleSubmit}>send</button>
+                <button className='btn-message' type='submit' onSubmit={handleSubmit}>
+                    <img src={send} alt="" />
+                </button>
             </div>
         </div>
     )

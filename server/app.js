@@ -53,7 +53,6 @@ io.on('connection', (socket) => {
 
     socket.on("client:messages", async(msg)=>{
         const {tel, message} = msg
-
         const user = await User.findOne({
             where:{tel:tel}
         })
@@ -66,7 +65,8 @@ io.on('connection', (socket) => {
             where:{SalaId:3}
         })
 
-        io.to(tel).to(numero).emit("server:messages", msg)
+        io.to(tel).to(numero).emit("server:messages", {data:msg, user:user})
+        
     })
 });
 
