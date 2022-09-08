@@ -22,6 +22,7 @@
     width: 100%;
     height: 95%;
     background-color: rgb(101, 122, 134);
+    overflow-y: scroll;
 }
 
 .header img {
@@ -73,7 +74,7 @@
     flex-direction: column;
     box-sizing:content-box;
     height: auto;
-    margin:.8rem 0;
+    margin: auto;
     font-size: 6vmin;
 }
 
@@ -83,19 +84,21 @@
     height: auto;
     padding: .1rem .5rem;
     font-size: 1rem;
-    border-radius: .5rem;
-    margin-bottom: .2rem;
     color: black;
     word-wrap: break-word;
 }
 
 .user-msg {
+    margin-bottom: 4px;
+    border-radius: .5rem .5rem 0 .5rem;
     align-self: flex-end;
     margin-right: .3rem;
     background-color: rgb(7, 177, 64);
 }
 
 .friend-msg{
+    margin-bottom: 4px;
+    border-radius: .5rem .5rem .5rem 0;
     margin-left: .3rem;
     background-color: white;
 }
