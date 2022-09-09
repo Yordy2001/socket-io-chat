@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { SocketContext } from '../../context/socket'
 
 import './chats.css'
@@ -14,13 +13,15 @@ export default function Chats(props) {
 
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
-
+    const [user, setUser] = useState([])
     let {num} = JSON.parse(localStorage.getItem('chat-session'))
 
     socket.on('server:messages', (msg)=>{
-        console.log(msg);
-        setMessages([...messages, msg.data])
+        setMessages([...messages, msg.data]) 
     })
+    useEffect(() => {
+        setUser(props.id)
+    }, [])
 
     const handleChange = (e)=>{
         setMessage(e.target.value)
@@ -28,6 +29,7 @@ export default function Chats(props) {
 
     const handleSubmit = (e)=>{
         e.preventDefault()
+        console.log(user);
         socket.emit('client:messages', {message, tel:props.id})  
     }
 
@@ -46,7 +48,8 @@ export default function Chats(props) {
                     {
                         messages?.map((msg, key) => {
                             return<div className='msg-block' key={key}>
-                                <p className= {`messsge ${num === msg.tel ? 'friend-msg' : 'user-msg'}`}>{msg.message}</p>
+                                <p className= {`messsge ${num === msg.tel ? 'friend-msg' : 'user-msg'}`}>
+                                    {msg.message}</p>
                             </div>
                         })
                     }
