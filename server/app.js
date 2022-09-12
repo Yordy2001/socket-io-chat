@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
         const user = await User.findOne({
             where:{tel:tel}
         })
-        
+
         let messages = await Message.findAll({
             // include: [{
             //     model: User,
@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
         })
 
         io.to(tel).to(numero).emit("server:messages", {data:msg, user:user})
-        
+
     })
 });
 

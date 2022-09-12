@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react'
+import axios from 'axios'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import { SocketContext } from '../../context/socket'
 
 import './chats.css'
-
-import portada from '../../assets/img/avatar.svg'
 import arrow from '../../assets/img/arrow_left.svg'
 import send from '../../assets/icon/icons8-send-25.png'
 
 export default function Chats(props) {
 
+    const buttonRef = useRef(null)
     const socket = useContext(SocketContext)
 
     const [message, setMessage] = useState("")
@@ -19,14 +19,20 @@ export default function Chats(props) {
     socket.on('server:messages', (msg) => {
         setMessages([...messages, msg.data])
     })
-    const getUser = async ()=>{
-        const user = await axios.get(`http://localhost:4000/${props.id}`)
-        return setUser(user)
+
+    const getUser = async () => {
+        const { data } = await axios.get(`http://localhost:4000/${props.id}`)
+        setUser(data)
+        console.log(data);
     }
 
     useEffect(() => {
         getUser()
     }, [])
+
+    useEffect(() => {
+        buttonRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, [messages])
 
     const handleChange = (e) => {
         setMessage(e.target.value)
@@ -34,7 +40,6 @@ export default function Chats(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(user);
         socket.emit('client:messages', { message, tel: props.id })
     }
 
@@ -42,9 +47,9 @@ export default function Chats(props) {
         <div className='chats'>
             <div className="header">
                 <img src={arrow} alt="" onClick={() => { props.handleOpen() }} />
-                <img src={portada} alt="" />
+                <img src={'http://localhost:4000/uploads/' + user.portada} alt="" />
                 <div>
-                    <p>Yordy</p>
+                    <p>{user.full_name}</p>
                     <p>online</p>
                 </div>
             </div>
@@ -57,6 +62,7 @@ export default function Chats(props) {
                         </div>
                     })
                 }
+                <div ref={buttonRef} />
             </div>
             <div className="form-message">
                 <form className='form-chats' onSubmit={handleSubmit}>
