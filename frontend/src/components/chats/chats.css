@@ -6,6 +6,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     background-color: rgb(101, 122, 134);
 }
 
@@ -21,7 +22,7 @@
 .messages-content{
     padding: 0;
     width: 100%;
-    height: 95%;
+    height: 90%;
     background-color: rgb(101, 122, 134);
     overflow-y: scroll;
 }
@@ -31,42 +32,47 @@
 }
 
 .form-message{
-    position: absolute;
-    bottom: 1rem;
-    height: 2rem;
+    height: 6%;
     width: 100%;
     background-color: none;
-    display: flex;
     padding: 0 .5rem;
+    margin: .5rem 0;
 }
 
 .form-chats{
+    display: flex;
+    justify-content: space-evenly;
     border-radius:50px;
-    background-color: rgba(17, 27, 33, 0.753);
     height: 100%;
-    width: 87%;
-    outline: none;
     margin-right: .2rem;
-    
 }
 
 .form-chats input{
+    border-radius:50px;
     outline: none;
     border: none;
     width: 100%;
     height: 100%;
-    background-color: transparent;
+    background-color: rgba(17, 27, 33, 0.753);
     color: whitesmoke;
     padding-left: .5rem;
 }
 
 .btn-message{
+    margin-left:.5rem ;
+    height: 100%;
     padding: .5rem;
     align-self: center;
     border-radius:20px;
     text-align: center;
     font-size: medium;
     background-color: rgb(31, 207, 31);
+}
+
+.btn-message img {
+   position: relative;
+   width: 100%;
+   bottom: .2rem;
 }
 
 .msg-block{

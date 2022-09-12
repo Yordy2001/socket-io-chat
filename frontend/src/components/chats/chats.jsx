@@ -3,7 +3,7 @@ import { SocketContext } from '../../context/socket'
 
 import './chats.css'
 
-import portada from  '../../assets/img/avatar.svg'
+import portada from '../../assets/img/avatar.svg'
 import arrow from '../../assets/img/arrow_left.svg'
 import send from '../../assets/icon/icons8-send-25.png'
 
@@ -14,29 +14,34 @@ export default function Chats(props) {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
     const [user, setUser] = useState([])
-    let {num} = JSON.parse(localStorage.getItem('chat-session'))
+    let { num } = JSON.parse(localStorage.getItem('chat-session'))
 
-    socket.on('server:messages', (msg)=>{
-        setMessages([...messages, msg.data]) 
+    socket.on('server:messages', (msg) => {
+        setMessages([...messages, msg.data])
     })
+    const getUser = async ()=>{
+        const user = await axios.get(`http://localhost:4000/${props.id}`)
+        return setUser(user)
+    }
+
     useEffect(() => {
-        setUser(props.id)
+        getUser()
     }, [])
 
-    const handleChange = (e)=>{
+    const handleChange = (e) => {
         setMessage(e.target.value)
     }
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault()
         console.log(user);
-        socket.emit('client:messages', {message, tel:props.id})  
+        socket.emit('client:messages', { message, tel: props.id })
     }
 
     return (
         <div className='chats'>
             <div className="header">
-                <img src={arrow} alt="" onClick={()=>{props.handleOpen()}}/>
+                <img src={arrow} alt="" onClick={() => { props.handleOpen() }} />
                 <img src={portada} alt="" />
                 <div>
                     <p>Yordy</p>
@@ -44,24 +49,22 @@ export default function Chats(props) {
                 </div>
             </div>
             <div className="messages-content">
-                {/* <div className='msg-block'> */}
-                    {
-                        messages?.map((msg, key) => {
-                            return<div className='msg-block' key={key}>
-                                <p className= {`messsge ${num === msg.tel ? 'friend-msg' : 'user-msg'}`}>
-                                    {msg.message}</p>
-                            </div>
-                        })
-                    }
-                {/* </div> */}
+                {
+                    messages?.map((msg, key) => {
+                        return <div className='msg-block' key={key}>
+                            <p className={`messsge ${num === msg.tel ? 'friend-msg' : 'user-msg'}`}>
+                                {msg.message}</p>
+                        </div>
+                    })
+                }
             </div>
             <div className="form-message">
                 <form className='form-chats' onSubmit={handleSubmit}>
-                    <input type="text" placeholder='Message' onChange={handleChange}/>
+                    <input type="text" placeholder='Message' onChange={handleChange} />
+                    <button className='btn-message' type='submit' onSubmit={handleSubmit}>
+                        <img src={send} alt="" />
+                    </button>
                 </form>
-                <button className='btn-message' type='submit' onSubmit={handleSubmit}>
-                    <img src={send} alt="" />
-                </button>
             </div>
         </div>
     )
