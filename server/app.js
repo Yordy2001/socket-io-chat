@@ -4,11 +4,10 @@ const { Server } = require('socket.io');
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const cookieParse = require('cookie-parser')
-const cookieSession = require('./utils/cookie')
+const cookieSession = require('../server/src/utils/cookie')
 
-const authMiddleware = require('./middleware/authenticate')
-const router = require('./routers/user.routes');
-const { User, Sala, Message } = require('./db')
+const router = require('../server/src/routers/user.routes');
+const { User, Sala, Message } = require('../server/src/db')
 
 //Server config 
 const app = express();
