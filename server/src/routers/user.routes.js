@@ -4,8 +4,8 @@ const upload = multer({dest: 'uploads/'})
 
 const router = express.Router()
 
-const { register, login, logOut, getFriends } = require('../controllers/auth.controllers')
-const {getUser} = require('../controllers/user.controller')
+const { register, login, logOut } = require('../controllers/auth.controllers')
+const {getUser, getFriends} = require('../controllers/user.controller')
 
 router.post('/register', upload.single('portada'), register)
 router.post('/login', login)
