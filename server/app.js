@@ -3,11 +3,13 @@ const http = require('http');
 const { Server } = require('socket.io');
 const bodyParser = require('body-parser')
 const cors = require('cors')
+
 const cookieParse = require('cookie-parser')
 const cookieSession = require('../server/src/utils/cookie')
-
 const router = require('../server/src/routers/user.routes');
-const chatController = require('../server/src/controllers/chats.controllers')
+const chatController = require('./src/controllers/socket.controller')
+
+const PORT = process.env.PORT || 4000;
 
 //Server config 
 const app = express();
@@ -33,19 +35,12 @@ app.get('/', (req, res) => {
 
 app.use(router)
 
-io.on('connection', async (socket) => {
-    let numero
-    socket.on('client:logged', (num)=>{
-        socket.join(num)
-        numero = num
-        io.emit('server:logged', num)
-    })
-    
+io.on('connection', async (socket) => { 
     // message, chat controller
     chatController(io, socket)
 
 });
 
-server.listen(4000, () => {
-    console.log('listening on *:4000');
+server.listen(PORT, () => {
+    console.log(`app is listen on port ${PORT}`);
 })

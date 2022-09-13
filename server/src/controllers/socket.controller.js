@@ -2,7 +2,17 @@ const { User, Message } = require('../db')
 
 
 module.exports = (io, socket) => {
+    let numero
 
+    // Create User Room 
+    const loger = (num) => {
+        socket.join(num)
+        numero = num
+
+        io.emit('server:logged', num)
+    }
+
+    // Get and post message
     const handleMessage = async (msg) => {
 
         const { tel, message } = msg
@@ -26,7 +36,7 @@ module.exports = (io, socket) => {
             console.log(error)
         }
     }
-
+    socket.on('client:logged', loger)
     socket.on("client:chats", chats)
-    socket.on( "client:messages", handleMessage)
+    socket.on("client:messages", handleMessage)
 }
