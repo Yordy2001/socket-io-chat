@@ -20,5 +20,16 @@ const UserShema = new Schema(
         info: {
             type: String
         },
+        friends: {
+            type: Array
+        }
+    },
+    {
+        timestamps: true,
+        versionKey: false,
     }
 )
+
+const UserModel = model("User", UserShema)
+
+export default UserModel;

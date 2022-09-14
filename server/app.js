@@ -3,14 +3,13 @@ const http = require('http');
 const { Server } = require('socket.io');
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const PORT = process.env.PORT || 4000;
 
-const db = require('./src/config/mongo')
+const db = require('./src/db/config/mongo')
 const cookieParse = require('cookie-parser')
 const cookieSession = require('../server/src/utils/cookie')
 const router = require('../server/src/routers/user.routes');
 const chatController = require('./src/controllers/socket.controller')
-
-const PORT = process.env.PORT || 4000;
 
 //Server config 
 const app = express();
@@ -35,6 +34,7 @@ app.get('/', (req, res) => {
 })
 
 app.use(router)
+
 db()
     .then(()=>{console.log("se connecto a mongo")})
     .catch(()=>{(err)=> console.log(err)})
