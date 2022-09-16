@@ -1,3 +1,4 @@
+require('dotenv/config')
 const { connect } = require('mongoose')
 
 async function dbConnect () {
@@ -5,5 +6,4 @@ async function dbConnect () {
     await connect(DB_URI)
 }
 
-module.exports = dbConnect
-
+module.exports = {dbConnect}

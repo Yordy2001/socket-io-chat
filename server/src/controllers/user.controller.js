@@ -1,7 +1,7 @@
-// const { User, user_contacts } = require('../db')
+const  UserModel  = require('../db/models/user.model')
+
 
 const getUser = async (req, res) => {
-    console.log();
     // try {
     //     let {id} = req.params
     //     const user = await User.findOne({
@@ -14,25 +14,20 @@ const getUser = async (req, res) => {
     // }
 }
 
+// Returun list of user's friends
 const getFriends = async (req, res) => {
-    console.log();
-    // const user =  req.session.user
-    // let user = 3
-    // const friendsId = await user_contacts.findAll({
-    //     raw: true,
-    //     attributes: ['id'],
-    //     where: {
-    //         UserId:user
-    //     }     
-    // })
-    // const friends = await User.findAll({
-    //     raw: true,
-    //     where: {
-    //         id: ['2', '4']
-    //     }
-    // })
-    // console.log(friendsId[1]);
-    // res.send(friends)
+    const {id} =  req.session.user
+    const {friends} = await UserModel.findOne({id});
+    let LFriends = [];
+
+    for(i = 0; i <= friends.length; i++){
+        user = await UserModel.findOne({
+            tel:friends[i]
+        });
+        LFriends.push(user)
+    }
+
+    res.send(LFriends)
 }
 
 module.exports  = {

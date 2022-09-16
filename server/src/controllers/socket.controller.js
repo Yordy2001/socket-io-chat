@@ -1,4 +1,4 @@
-// const { User, Message } = require('../db')
+const { User, Message } = require('../db/models/message.models')
 
 
 module.exports = (io, socket) => {

@@ -1,3 +1,4 @@
+require('dotenv/config')
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -5,7 +6,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const PORT = process.env.PORT || 4000;
 
-const db = require('./src/db/config/mongo')
+const {dbConnect} = require('./src/db/config/mongo')
 const cookieParse = require('cookie-parser')
 const cookieSession = require('../server/src/utils/cookie')
 const router = require('../server/src/routers/user.routes');
@@ -35,7 +36,7 @@ app.get('/', (req, res) => {
 
 app.use(router)
 
-db()
+dbConnect()
     .then(()=>{console.log("se connecto a mongo")})
     .catch(()=>{(err)=> console.log(err)})
 

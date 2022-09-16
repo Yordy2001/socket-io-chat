@@ -25,4 +25,6 @@ const MessageShema = new Schema(
 
 const MessageModel = model("Message", MessageShema)
 
-export default MessageModel;
+module.exports = {
+    MessageModel
+};
