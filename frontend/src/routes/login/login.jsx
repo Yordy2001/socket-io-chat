@@ -1,14 +1,15 @@
 import React, { useContext }  from 'react'
-import axios from 'axios'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom';
 
+import fetchAuth  from '../../utils/API/fetchAuth';
 import { SocketContext } from '../../context/socket'
 import loginSvg from '../../assets/img/app-logo-hey.svg'
 
 import './login.css'
 import '../../App.css'
 
+const auth = new fetchAuth()
 export default function Login() {
 
     const navigate = useNavigate()
@@ -21,7 +22,7 @@ export default function Login() {
         },
         onSubmit: async (values) => {
             try {
-                await axios.post('http://localhost:4000/login', values)
+                await auth.logIn(values)
                 socket.emit('client:logged', values.tel)
                 localStorage.setItem('chat-session' , JSON.stringify({ auth:true, num:values.tel }))
                 navigate('/')

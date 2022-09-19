@@ -1,33 +1,27 @@
 const bcript = require('bcrypt')
-const { User } = require('../db')
+const  UserModel  = require('../db/models/user.model')
 
 const register = async (req, res) => {
-
     const { name, tel, info, password } = req.body
     const portada  =  req.file?.filename
-    
+
     try {
-        const user = await User.findOne({
-            where: { tel: tel }
-        })
+        const user = await UserModel.findOne({tel});
 
         if (user) {
-            return res.sendStatus(400)
+            res.status(400).json({msg:`Este numero esta registrado` })
         }
 
         const hashPassword = await bcript.hash(password, 12)
 
-        // await sala_usuario.create({
-        //     UserId: user.id
-        // })
-
-        await User.create({
-            full_name: name,
+        await UserModel.create({
+            name,
             tel,
             password: hashPassword,
             portada,
             info
         })
+
         res.status(201).json({msg:`usuario ${name} registrado` })
 
     } catch (error) {
@@ -36,12 +30,10 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { tel, password } = req.body
-
     try {
-        const user = await User.findOne({ 
-            where: {tel: tel }
-        })
+        const { tel, password } = req.body
+
+        const user = await UserModel.findOne({tel});
         const isMatch = await bcript.compare(password, user.password)
 
         if (!user || !isMatch) {
@@ -56,7 +48,7 @@ const login = async (req, res) => {
     }
 }
 
-const logOut = (req, res) =>{
+const logOut = (req, res) =>{ 
     req.session.isAuth = false
     res.sendStatus(200)
     return
@@ -64,4 +56,8 @@ const logOut = (req, res) =>{
 
 
 
-module.exports = { register, login, logOut }
+module.exports = { 
+    register, 
+    login, 
+    logOut
+}

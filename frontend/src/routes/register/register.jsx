@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom';
+import fetchAuth from '../../utils/API/fetchAuth';
 
 import '../../App.css'
 import './register.css'
 import avatar from '.././../assets/img/avatar.svg'
 import loginSvg from '../../assets/img/app-logo-hey.svg'
 
+const auth = new fetchAuth()
 export default function Register() {
 
     const navigate = useNavigate()
@@ -29,7 +30,7 @@ export default function Register() {
                 for (let [key, value] of Object.entries(values)) {
                     formData.set(key, value);
                 }
-                await axios.post('http://localhost:4000/register', formData)
+                await auth.register(formData)
                 navigate('/login')
 
             } catch (error) {
