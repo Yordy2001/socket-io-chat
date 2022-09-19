@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import fetcAuth from '../../utils/API/fetchAuth'
 
 import './header.css'
 import Nav from '../nav/nav'
 import lupa from '../../assets/img/icons_search.svg'
 import menu_vertical from '../../assets/img/icons-menu-vertical.png'
 import arrow_left from '../../assets/img/arrow_left.svg'
-import { useNavigate } from 'react-router-dom'
 
+const auth = new fetcAuth()
 export default function Header() {
     const navigate = useNavigate()
     const [showInput, setShowInput] = useState(true)
@@ -21,16 +23,13 @@ export default function Header() {
     }
 
     const logOut = async () => {
-        console.log("logout")
         try {
-            await axios.post('http://localhost:4000/logout')
-            // socket.emit('client:loggedOut', 'loggedOut')
+            await auth.logOut()
             localStorage.setItem('chat-session', JSON.stringify(false))
             navigate('/login')
         } catch (error) {
             console.log(error)
         }
-
     }
 
     return (

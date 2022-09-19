@@ -24,7 +24,7 @@ export default function Home() {
         })
     }, [socket])
 
-    const handleChat = ()=>{
+    const handleChat = () => {
         setOpenChat(!openChat.open)
     }
 
@@ -37,36 +37,36 @@ export default function Home() {
                         handleOpen={handleChat}
                     />
                     :
-                <>
-                <Header></Header>
-                <div className='chat-route'>
-                    {
-                        chats
+                    <>
+                        <Header></Header>
+                        <div className='chat-route'>
+                            {
+                                chats
 
-                            ?
-                            chats?.map(each => {
-                                return (
-                                    <div className='chats-content' key={each.id} onClick={()=>setOpenChat( {open:true, chatId:each.tel} )}>
-                                        <img src={'http://localhost:4000/uploads/'+each.portada} alt="user picture" />
+                                    ?
+                                    chats?.map(each => {
+                                        return (
+                                            <div className='chats-content' key={each.id} onClick={() => setOpenChat({ open: true, chatId: each.tel })}>
+                                                <img src={`${import.meta.env.VITE_SERVER_URL}` + each.portada} alt="user picture" />
 
-                                        <div className='chats-name-msg'>
-                                            <h3>{each.full_name}</h3>
-                                            {/* <p>{each.lastMessage}</p> */}
-                                        </div>
+                                                <div className='chats-name-msg'>
+                                                    <h3>{each.full_name}</h3>
+                                                    {/* <p>{each.lastMessage}</p> */}
+                                                </div>
 
-                                        <div className='chats-content-right'>
-                                            {/* <p>{each.time}</p> */}
-                                            <p>8</p>
-                                        </div>
-                                    </div>
-                                )
-                            })
-                            :
+                                                <div className='chats-content-right'>
+                                                    {/* <p>{each.time}</p> */}
+                                                    <p>8</p>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                    :
 
-                            <h1>No hay Chats</h1>
-                    }
-                </div>
-                </>
+                                    <h1>No hay Chats</h1>
+                            }
+                        </div>
+                    </>
             }
         </>
 

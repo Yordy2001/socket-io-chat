@@ -20,10 +20,10 @@ export default function Chats(props) {
         setMessages([...messages, msg.data])
     })
 
+    // Get user Friends
     const getUser = async () => {
-        const { data } = await axios.get(`http://localhost:4000/${props.id}`)
+        const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL + props.id}`)
         setUser(data)
-        console.log(data);
     }
 
     useEffect(() => {
@@ -31,6 +31,7 @@ export default function Chats(props) {
     }, [])
 
     useEffect(() => {
+        // Automate Scroll button
         buttonRef.current?.scrollIntoView({ behavior: 'smooth' })
     }, [messages])
 
@@ -41,13 +42,14 @@ export default function Chats(props) {
     const handleSubmit = (e) => {
         e.preventDefault()
         socket.emit('client:messages', { message, tel: props.id })
+        setMessage('')
     }
 
     return (
         <div className='chats'>
             <div className="header">
                 <img src={arrow} alt="" onClick={() => { props.handleOpen() }} />
-                <img src={'http://localhost:4000/uploads/' + user.portada} alt="" />
+                <img src={`${import.meta.env.VITE_SERVER_URL}`+'uploads/' + user.portada} alt="" />
                 <div>
                     <p>{user.full_name}</p>
                     <p>online</p>
