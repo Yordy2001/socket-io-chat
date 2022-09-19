@@ -1,11 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { SocketContext } from '../../context/socket'
+import Header from '../../components/header/herder'
+import Chats from '../../components/chats/chats'
 
 import '../../App.css'
 import './home.css'
-
-import Header from '../../components/header/herder'
-import Chats from '../../components/chats/chats'
 
 export default function Home() {
 

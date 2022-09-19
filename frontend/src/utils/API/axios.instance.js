@@ -1,11 +1,11 @@
-const axios = require('axios')
+import axios from 'axios'
 
-module.exports = class FetchApi {
+export default class FetchApi {
     api
     constructor(){
         this.api = axios.create({
-            withCredentials: true,
-            baseURL: ""
+            // withCredentials: true,
+            baseURL:  `${import.meta.env.VITE_SERVER_URL}`
         })
     }
 }

@@ -17,7 +17,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors:{
-        origin: '*'
+        // withCredentials: true,
+        origin: '*',
     }
 });
 
@@ -26,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/static', express.static('public'))
 app.use('/uploads', express.static('uploads'))
-app.use(cors({ origin: '*' }))
+app.use(cors({origin: '*' }))
 app.use(cookieParse())
 app.use(cookieSession)
 

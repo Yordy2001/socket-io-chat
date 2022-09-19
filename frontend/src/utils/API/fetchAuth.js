@@ -1,15 +1,18 @@
-const fetchApi = require('./axios.instance')
+import FetchApi from './axios.instance'
 
-module.exports = class fetchAuth extends fetchApi {
+export default class fetchAuth extends FetchApi {
     async logIn(data){
-        await this.api.get('/login', data)
+        await this.api.post('/login', data)
+        return
     }
     
     async logOut(){
-        await this.api.get('/logout')
+        await this.api.post('/logout')
+        return
     }
 
     async register(data){
-        await this.api.get('/register', data)
+        await this.api.post('/register', data)
+        return
     }
 }

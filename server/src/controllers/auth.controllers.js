@@ -9,7 +9,7 @@ const register = async (req, res) => {
         const user = await UserModel.findOne({tel});
 
         if (user) {
-            return res.sendStatus(400)
+            res.status(400).json({msg:`Este numero esta registrado` })
         }
 
         const hashPassword = await bcript.hash(password, 12)
@@ -30,7 +30,6 @@ const register = async (req, res) => {
 }
 
 const login = async (req, res) => {
-
     try {
         const { tel, password } = req.body
 
