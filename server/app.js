@@ -1,29 +1,33 @@
+require('dotenv/config')
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const cookieParse = require('cookie-parser')
-const cookieSession = require('./utils/cookie')
+const PORT = process.env.PORT || 4000;
 
-const router = require('./routers/user.routes');
-const { User, Sala, Message } = require('./db')
+const {dbConnect} = require('./src/db/config/mongo')
+const cookieParse = require('cookie-parser')
+const cookieSession = require('../server/src/utils/cookie')
+const router = require('../server/src/routers/user.routes');
+const chatController = require('./src/controllers/socket.controller')
 
 //Server config 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors:{
-        origin: '*'
+        // withCredentials: true,
+        origin: '*',
     }
 });
 
 app.set('trust proxy', 1) //cookie config
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(express.static('public'))
 app.use('/static', express.static('public'))
-app.use(cors({ origin: '*' }))
+app.use('/uploads', express.static('uploads'))
+app.use(cors({origin: '*' }))
 app.use(cookieParse())
 app.use(cookieSession)
 
@@ -33,43 +37,16 @@ app.get('/', (req, res) => {
 
 app.use(router)
 
+dbConnect()
+    .then(()=>{console.log("se connecto a mongo")})
+    .catch(()=>{(err)=> console.log(err)})
 
-io.on('connection', (socket) => {
-    let numero
-    socket.on('client:logged', (num)=>{
-        socket.join(num)
-        numero = num
-        io.emit('server:logged', num)
-    })
+io.on('connection', async (socket) => { 
+    // message, chat controller
+    chatController(io, socket)
 
-    socket.on("client:chats",  async (tel)=>{
-        try {
-            const user =  await User.findAll()
-            io.emit("server:chats", user)
-        } catch (error) {
-            console.log(error)
-        }  
-    })
-
-    socket.on("client:messages", async(msg)=>{
-        const {tel, message} = msg
-
-        const user = await User.findOne({
-            where:{tel:tel}
-        })
-        
-        let messages = await Message.findAll({
-            // include: [{
-            //     model: User,
-            //     where: { UserId : user.id }
-            // }],
-            where:{SalaId:3}
-        })
-        console.log(messages);
-        io.to(tel).to(numero).emit("server:messages", message)
-    })
 });
 
-server.listen(4000, () => {
-    console.log('listening on *:4000');
+server.listen(PORT, () => {
+    console.log(`app is listen on port ${PORT}`);
 })

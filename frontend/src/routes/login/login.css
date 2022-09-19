@@ -1,38 +1,40 @@
-.register-page{
+.login-page{
     display: flex;
     width: 100%;
     height: 100vh;
     box-sizing: border-box;
-    /* background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%); */
-    background-color: rgba(15, 21, 26, 0.856);
+    background: linear-gradient(to right bottom, whitesmoke 50%, #464953 50%);
 }
 
 img{
     width: 100%;
 }
 
-.form-content{
+.login-description{
+    display: none;
+}
+.form-content-login {
     border-radius: 1rem;
-    margin: auto;
     width: 80%;
+    margin: auto;
     padding: 1rem;
-    height: auto;
     background-color: whitesmoke;
 }
-.form-content h1{
+
+.form-content-login h1{
     color: black;
     text-align: center;
     margin-bottom: .5rem;
 }
 
-.form-content form input,
-.form-content form textarea{
+.form-login input,
+textarea{
     width: 100%;
     padding: 1rem;
     margin-bottom: .5rem;
 }
 
-.form-content form input{
+.form-login input{
     border: 2px solid green;
     border-right: none;
     border-left: none;
@@ -42,25 +44,153 @@ img{
 }
 
 .btn-next{
-    display: block;
-    margin-top: .5rem;
+    display: inline-block;
     padding: .2rem .5rem;
     font-size: 1.5rem;
-    float: right;
     color: aliceblue;
     background-color: #0ba360;
 }
 
-/* .form-content form .input-file{
-    display: none;
-} */
+.buttons-container{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    justify-content: space-evenly;
+}
 
 label{
     width: 5rem;
     height: 5rem;
     background-color: #0ba360;
 }
-.form-content form  .lbl-portada{
+
+.form-login .lbl-portada{
     max-width:1rem;
     height: 7rem;
+}
+
+  
+/* Media Query for low resolution  Tablets, Ipads */
+@media (min-width: 481px) and (max-width: 767px) {
+    .login-image{
+        display: none;
+    }
+
+    .form-content-login{
+        border-radius: 1rem;
+        width: 25rem;
+        margin: auto;
+        padding: 1rem;
+        background-color: whitesmoke;
+    }
+
+    .buttons-container{
+        margin-top: 1rem;
+        display: flex;
+        justify-content: center;
+        justify-content: space-evenly;
+    }
+}
+  
+/* Media Query for Tablets Ipads portrait mode */
+@media (min-width: 768px) and (max-width: 1024px){
+    .login-image{
+        display: block;
+        padding: 1rem;
+        width: 45%;
+    }
+
+    .form-content-login{
+        border-radius: 1rem;
+        width: 50vh;
+        margin: auto;
+        padding: 1rem;
+        background-color: whitesmoke;
+    }
+    .buttons-container .btn-next{
+        padding: .5rem;
+    }
+}
+
+  
+/* Media Query for Laptops and Desktops */
+@media (min-width: 1025px) and (max-width: 1280px){
+    .login-page{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: linear-gradient(to right, #464953 50%, whitesmoke 50%);
+    }
+
+    .login-description{
+        width: 45%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 1rem;
+    }
+    .login-description h2{
+        font-size: xx-large;
+        font-weight: 600;
+    }
+
+    .form-content-login{
+        display: flex; 
+        width: 50%;
+        height: 100%;
+        margin: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;       
+    }
+    .form-content-login h1{
+        font-size: xx-large;
+        font-weight: 600;
+    }
+    .form-login{
+        height: 50%;
+    }
+    .form-login input{
+        border-bottom: ridge green 2px;
+        font-size: large;
+        margin-bottom: 1rem;
+    }
+    .buttons-container{
+        flex-direction: column-reverse;
+    }
+    .buttons-container .btn-next{
+        padding: 1rem;
+        width: 100%;
+    }
+}
+  
+/* Media Query for Large screens */
+@media (min-width: 1281px) {
+    .login-page{
+        display: flex;
+        /* flex-direction: row-reverse; */
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to right, #464953 50%, whitesmoke 50%);
+    }
+    /* .login-image{
+        display: flex;
+        padding: 1rem;
+        width: 40%;
+    } */
+    .login-description{
+        display: block;
+        padding: 1rem;
+    }
+
+    .form-content-login{
+        border-radius: 1rem;
+        width: 25rem;
+        margin: auto;
+        padding: 1rem;
+        background-color: whitesmoke;
+    }
 }
