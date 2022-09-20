@@ -23,8 +23,9 @@ export default function Chats(props) {
 
     // Get user Friends
     const getUser = async () => {
-        const data = await userApi(props.id)
+        const data = await userApi.getFriend(props.id)
         setUser(data)
+
     }
 
     useEffect(() => {
@@ -52,7 +53,7 @@ export default function Chats(props) {
                 <img src={arrow} alt="" onClick={() => { props.handleOpen() }} />
                 <img src={`${import.meta.env.VITE_SERVER_URL}`+'uploads/' + user.portada} alt="" />
                 <div>
-                    <p>{user.full_name}</p>
+                    <p>{user.name}</p>
                     <p>online</p>
                 </div>
             </div>

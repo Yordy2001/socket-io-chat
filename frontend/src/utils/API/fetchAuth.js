@@ -5,17 +5,17 @@ export default class fetchAuth extends FetchApi {
     endPoint = '/login'
 
     async logIn(data){
-        await this.api.post(this.endPoint, data)
+        await this.api.post('/login', data)
         return
     }
     
     async logOut(){
-        await this.api.post(this.endPoint)
+        await this.api.post('/logout')
         return
     }
 
     async register(data){
-        await this.api.post(this.endPoint, data)
+        await this.api.post('/register', data)
         return
     }
 }

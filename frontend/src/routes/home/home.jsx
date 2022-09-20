@@ -28,9 +28,6 @@ export default function Home() {
         socket.emit('client:chats', openChat.chatId)
         getData()
 
-        // socket.on('server:chats', (socket) => {
-            // setChats(socket)
-        // })
     }, [socket])
 
     const handleChat = () => {
@@ -49,23 +46,21 @@ export default function Home() {
                     <>
                         <Header></Header>
                         <div className='chat-route'>
-                            {/* {
+                            {
                                 chats
 
                                     ?
                                     chats?.map(each => {
                                         return (
-                                            <div className='chats-content' key={each.id} onClick={() => setOpenChat({ open: true, chatId: each.tel })}>
-                                                <img src={`${import.meta.env.VITE_SERVER_URL}` + each.portada} alt="user picture" />
+                                            <div className='chats-content' key={each?.id} onClick={() => setOpenChat({ open: true, chatId: each.tel })}>
+                                                <img src={`${import.meta.env.VITE_SERVER_URL}` + each?.portada} alt="user picture" />
 
                                                 <div className='chats-name-msg'>
-                                                    <h3>{each.full_name}</h3>
-                                                    <p>{each.lastMessage}</p>
+                                                    <h3>{each?.name}</h3>
                                                 </div>
 
                                                 <div className='chats-content-right'>
-                                                    <p>{each.time}</p>
-                                                    <p>8</p>
+                                                    <p>8pm</p>
                                                 </div>
                                             </div>
                                         )
@@ -73,7 +68,7 @@ export default function Home() {
                                     :
 
                                     <h1>No hay Chats</h1>
-                            } */}
+                            }
                         </div>
                     </>
             }

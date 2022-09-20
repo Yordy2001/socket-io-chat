@@ -5,7 +5,7 @@ export default class friendsApi extends FetchApi {
     endPoint= '/friends'
 
     async getFriend(tel){
-        const user =  await this.api.get(this.endPoint, tel)
+        const user =  await this.api.get(this.endPoint+`/${tel}`)
         return user.data
     }
     
