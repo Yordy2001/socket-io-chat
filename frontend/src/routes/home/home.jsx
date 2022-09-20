@@ -21,7 +21,6 @@ export default function Home() {
     const getData = async ()=> {
         const data = await userApi.getFriends()
         setChats(data)
-        console.log(chats);
     }
 
     useEffect(() => {
@@ -52,8 +51,12 @@ export default function Home() {
                                     ?
                                     chats?.map(each => {
                                         return (
-                                            <div className='chats-content' key={each?.id} onClick={() => setOpenChat({ open: true, chatId: each.tel })}>
-                                                <img src={`${import.meta.env.VITE_SERVER_URL}` + each?.portada} alt="user picture" />
+                                            <div className='chats-content'
+                                                key={each?.id}
+                                                onClick={() => setOpenChat({ open: true, chatId: each.tel })}
+                                            >
+                                                <img src={`${import.meta.env.VITE_SERVER_URL}` + 'uploads/' + each?.portada}
+                                                 alt="user picture" />
 
                                                 <div className='chats-name-msg'>
                                                     <h3>{each?.name}</h3>
