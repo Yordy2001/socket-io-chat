@@ -2,10 +2,12 @@ import React, { useState, useContext, useEffect } from 'react'
 import { SocketContext } from '../../context/socket'
 import Header from '../../components/header/herder'
 import Chats from '../../components/chats/chats'
+import friendsApi from '../../utils/API/fetchUser'
 
 import '../../App.css'
 import './home.css'
 
+const userApi = new friendsApi()
 export default function Home() {
 
     const socket = useContext(SocketContext)
@@ -14,14 +16,21 @@ export default function Home() {
         open: false,
         chatId: 0
     })
-
     const [chats, setChats] = useState([])
+
+    const getData = async ()=> {
+        const data = await userApi.getFriends()
+        setChats(data)
+        console.log(chats);
+    }
 
     useEffect(() => {
         socket.emit('client:chats', openChat.chatId)
-        socket.on('server:chats', (socket) => {
-            setChats(socket)
-        })
+        getData()
+
+        // socket.on('server:chats', (socket) => {
+            // setChats(socket)
+        // })
     }, [socket])
 
     const handleChat = () => {
@@ -40,7 +49,7 @@ export default function Home() {
                     <>
                         <Header></Header>
                         <div className='chat-route'>
-                            {
+                            {/* {
                                 chats
 
                                     ?
@@ -51,11 +60,11 @@ export default function Home() {
 
                                                 <div className='chats-name-msg'>
                                                     <h3>{each.full_name}</h3>
-                                                    {/* <p>{each.lastMessage}</p> */}
+                                                    <p>{each.lastMessage}</p>
                                                 </div>
 
                                                 <div className='chats-content-right'>
-                                                    {/* <p>{each.time}</p> */}
+                                                    <p>{each.time}</p>
                                                     <p>8</p>
                                                 </div>
                                             </div>
@@ -64,7 +73,7 @@ export default function Home() {
                                     :
 
                                     <h1>No hay Chats</h1>
-                            }
+                            } */}
                         </div>
                     </>
             }

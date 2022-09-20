@@ -1,11 +1,12 @@
-import axios from 'axios'
 import React, { useContext, useEffect, useState, useRef } from 'react'
 import { SocketContext } from '../../context/socket'
+import friendsApi from '../../utils/API/fetchUser'
 
 import './chats.css'
 import arrow from '../../assets/img/arrow_left.svg'
 import send from '../../assets/icon/icons8-send-25.png'
 
+const userApi = new friendsApi()
 export default function Chats(props) {
 
     const buttonRef = useRef(null)
@@ -22,7 +23,7 @@ export default function Chats(props) {
 
     // Get user Friends
     const getUser = async () => {
-        const { data } = await axios.get(`${import.meta.env.VITE_SERVER_URL + props.id}`)
+        const data = await userApi(props.id)
         setUser(data)
     }
 

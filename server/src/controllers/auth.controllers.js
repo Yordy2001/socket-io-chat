@@ -54,8 +54,6 @@ const logOut = (req, res) =>{
     return
 }
 
-
-
 module.exports = { 
     register, 
     login, 
