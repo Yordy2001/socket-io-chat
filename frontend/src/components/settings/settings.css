@@ -50,3 +50,8 @@
     border-radius: .5rem;
     margin-right: .5rem;
 }
+.form-request p,
+.form-request h3{
+    color: black;
+    text-align: center;
+}

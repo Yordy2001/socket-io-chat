@@ -9,9 +9,7 @@ import lupa from '../../assets/img/icons_search.svg'
 import menu_vertical from '../../assets/img/icons-menu-vertical.png'
 import arrow_left from '../../assets/img/arrow_left.svg'
 
-const auth = new fetcAuth()
 export default function Header() {
-    const navigate = useNavigate()
     const [showInput, setShowInput] = useState(true)
     const [showSetting, setShowSetting] = useState(false)
 
@@ -25,16 +23,6 @@ export default function Header() {
 
     const isSetting = () =>{
         setShowSetting(true)
-    }
-
-    const logOut = async () => {
-        try {
-            await auth.logOut()
-            localStorage.setItem('chat-session', JSON.stringify(false))
-            navigate('/login')
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     return (
