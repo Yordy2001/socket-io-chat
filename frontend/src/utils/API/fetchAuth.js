@@ -1,6 +1,9 @@
 import FetchApi from './axios.instance'
 
 export default class fetchAuth extends FetchApi {
+    // server endpoint
+    endPoint = '/login'
+
     async logIn(data){
         await this.api.post('/login', data)
         return

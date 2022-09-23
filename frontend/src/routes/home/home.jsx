@@ -2,10 +2,12 @@ import React, { useState, useContext, useEffect } from 'react'
 import { SocketContext } from '../../context/socket'
 import Header from '../../components/header/herder'
 import Chats from '../../components/chats/chats'
+import friendsApi from '../../utils/API/fetchUser'
 
 import '../../App.css'
 import './home.css'
 
+const userApi = new friendsApi()
 export default function Home() {
 
     const socket = useContext(SocketContext)
@@ -14,14 +16,17 @@ export default function Home() {
         open: false,
         chatId: 0
     })
-
     const [chats, setChats] = useState([])
+
+    const getData = async ()=> {
+        const data = await userApi.getFriends()
+        setChats(data)
+    }
 
     useEffect(() => {
         socket.emit('client:chats', openChat.chatId)
-        socket.on('server:chats', (socket) => {
-            setChats(socket)
-        })
+        getData()
+
     }, [socket])
 
     const handleChat = () => {
@@ -46,17 +51,19 @@ export default function Home() {
                                     ?
                                     chats?.map(each => {
                                         return (
-                                            <div className='chats-content' key={each.id} onClick={() => setOpenChat({ open: true, chatId: each.tel })}>
-                                                <img src={`${import.meta.env.VITE_SERVER_URL}` + each.portada} alt="user picture" />
+                                            <div className='chats-content'
+                                                key={each?.id}
+                                                onClick={() => setOpenChat({ open: true, chatId: each.tel })}
+                                            >
+                                                <img src={`${import.meta.env.VITE_SERVER_URL}` + 'uploads/' + each?.portada}
+                                                 alt="user picture" />
 
                                                 <div className='chats-name-msg'>
-                                                    <h3>{each.full_name}</h3>
-                                                    {/* <p>{each.lastMessage}</p> */}
+                                                    <h3>{each?.name}</h3>
                                                 </div>
 
                                                 <div className='chats-content-right'>
-                                                    {/* <p>{each.time}</p> */}
-                                                    <p>8</p>
+                                                    <p>8pm</p>
                                                 </div>
                                             </div>
                                         )

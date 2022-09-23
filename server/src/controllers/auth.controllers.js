@@ -42,6 +42,7 @@ const login = async (req, res) => {
 
         req.session.isAuth = true
         req.session.user = user
+        console.log(req.session);
         res.status(200).json(user)
     } catch (error) {
         console.log(error)
@@ -53,8 +54,6 @@ const logOut = (req, res) =>{
     res.sendStatus(200)
     return
 }
-
-
 
 module.exports = { 
     register, 
