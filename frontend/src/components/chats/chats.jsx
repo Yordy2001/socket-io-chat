@@ -18,7 +18,8 @@ export default function Chats(props) {
     let { num } = JSON.parse(localStorage.getItem('chat-session'))
 
     socket.on('server:messages', (msg) => {
-        setMessages([...messages, msg.data])
+        console.log(msg);
+        setMessages([...messages, msg])
     })
 
     // Get user Friends
@@ -43,6 +44,8 @@ export default function Chats(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        
+        console.log(messages, num);
         socket.emit('client:messages', { message, tel: props.id })
         setMessage('')
     }
@@ -58,19 +61,19 @@ export default function Chats(props) {
                 </div>
             </div>
             <div className="messages-content">
-                {
+                {/* {
                     messages?.map((msg, key) => {
                         return <div className='msg-block' key={key}>
-                            <p className={`messsge ${num === msg.tel ? 'friend-msg' : 'user-msg'}`}>
+                            <p className={`messsge ${num === msg.user?.tel ? 'friend-msg' : 'user-msg'}`}>
                                 {msg.message}</p>
                         </div>
                     })
                 }
-                <div ref={buttonRef} />
+                <div ref={buttonRef} /> */}
             </div>
             <div className="form-message">
                 <form className='form-chats' onSubmit={handleSubmit}>
-                    <input type="text" placeholder='Message' onChange={handleChange} />
+                    <input type="text" placeholder='Message' value={message} onChange={handleChange} />
                     <button className='btn-message' type='submit' onSubmit={handleSubmit}>
                         <img src={send} alt="" />
                     </button>

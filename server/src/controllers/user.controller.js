@@ -14,8 +14,8 @@ const getFriend = async (req, res) => {
 // Returun list of user's friends
 const getFriends = async (req, res) => {
     try {
-        const { id } = req.session?.user
-        const { friends } = await UserModel.findOne({ id });
+        const { tel } = req.session?.user
+        const { friends } = await UserModel.findOne({ tel });
         let LFriends = [];
 
         for (i = 0; i <= friends.length; i++) {
@@ -70,4 +70,3 @@ module.exports = {
     getFriend,
     getFriends
 }
-

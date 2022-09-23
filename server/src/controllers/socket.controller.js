@@ -1,4 +1,4 @@
-const { User, Message } = require('../db/models/message.models')
+const UserModel = require('../db/models/user.model')
 
 
 module.exports = (io, socket) => {
@@ -14,18 +14,15 @@ module.exports = (io, socket) => {
 
     // Get and post message
     const handleMessage = async (msg) => {
+        const { tel, message } = msg
+        try {
+            const user = await UserModel.findOne({tel})
+            // io.emit("server:messages", { data: message, user: user })
+            io.to(tel).to(numero).emit("server:messages", { data: message, user: user })
 
-        // const { tel, message } = msg
-        // try {
-        //     const user = await User.findOne({
-        //         where: { tel: tel }
-        //     })
-
-        //     io.to(tel).to(numero).emit("server:messages", { data: msg, user: user })
-
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     const chats = async (payload) => {
@@ -37,6 +34,6 @@ module.exports = (io, socket) => {
         // }
     }
     socket.on('client:logged', loger)
-    socket.on("client:chats", chats)
+    // socket.on("client:chats", chats)
     socket.on("client:messages", handleMessage)
 }
