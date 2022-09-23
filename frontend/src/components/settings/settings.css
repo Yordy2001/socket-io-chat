@@ -1,3 +1,8 @@
+.contact-header{
+    display: flex;
+    justify-content: space-around;
+}
+
 .setting-nav{
     width: 6rem;
     height: auto;

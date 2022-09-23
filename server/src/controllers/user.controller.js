@@ -25,7 +25,7 @@ const getFriends = async (req, res) => {
             LFriends.push(user)
         }
 
-        res.send(LFriends)
+        res.status(200).json(LFriends)
     } catch (error) {
         console.log(error);
     }
@@ -37,10 +37,20 @@ const addFriends = async (req, res) => {
 
         const { id } = req.session.user
         const { tel } = req.body
-
+        
+        //Verify is user is register in the app 
         const friends = await UserModel.findOne({ tel })
         if (!friends) {
-            return res.status(409).send({ msg: "Usuario no encontrado" })
+            return res.status(404).send({ msg: "Usuario no encontrado" })
+        }
+
+        //Verify is user is already add
+        const isFriends = await UserModel.findOne({
+            friends:{ $in: [tel]},
+            id
+        })
+        if(isFriends){
+            return res.status(409).json({msg:"Este usuario ya esta agregado"})
         }
 
         await UserModel.updateOne(id, {

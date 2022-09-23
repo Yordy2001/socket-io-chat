@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import friendsApi from '../../utils/API/fetchUser';
 import fetchAuth from '../../utils/API/fetchAuth';
+import del from '../../assets/icon/icons8-send-100.png';
 
 import './settings.css'
 import Modal from '../modal/modal';
@@ -51,8 +52,8 @@ export default function Settings() {
     }
 
     return (
-        <Modal open={openModal} onClose={handleClose}>
-        {/* <> */}
+        // <Modal open={openModal} onClose={handleClose}>
+        <>
             {
                 openInput
                     ?
@@ -66,7 +67,10 @@ export default function Settings() {
                     </nav>
                     :
                     <form onSubmit={handleSubmit} className='form-request'>
-                        <h3>Contacts</h3>
+                        <div className='contact-header'>
+                            <h3>Contacts</h3>
+                            <button onClick={()=>[setOpenInput(true)]}>X</button>
+                        </div>
                         <input
                             type="tel"
                             placeholder='tel'
@@ -76,7 +80,7 @@ export default function Settings() {
                         <button type='submit'>Add</button>
                     </form>
             }
-        {/* </> */}
-        </Modal>
+        </>
+        // </Modal>
     )
 }
