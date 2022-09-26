@@ -31,6 +31,10 @@
     width: 2rem;
 }
 
+.header img{
+    border-radius: 55%;
+}
+
 .form-message{
     height: 6%;
     width: 100%;

@@ -1,4 +1,6 @@
 const UserModel = require('../db/models/user.model')
+const MessageModel = require('../db/models/message.models')
+const middleware = require('../middleware/authenticate')
 
 
 module.exports = (io, socket) => {
@@ -14,10 +16,16 @@ module.exports = (io, socket) => {
 
     // Get and post message
     const handleMessage = async (msg) => {
-        const { tel, message } = msg
+        const { tel, message, userTel } = msg
         try {
             const user = await UserModel.findOne({tel})
-            // io.emit("server:messages", { data: message, user: user })
+            await MessageModel.create({
+                message,
+                to: tel,
+                from:userTel
+            })
+            const msg = await MessageModel.find()
+            console.log(msg);
             io.to(tel).to(numero).emit("server:messages", { data: message, user: user })
 
         } catch (error) {

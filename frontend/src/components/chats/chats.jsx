@@ -44,9 +44,7 @@ export default function Chats(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        
-        console.log(messages, num);
-        socket.emit('client:messages', { message, tel: props.id })
+        socket.emit('client:messages', { message, tel: props.id, userTel: num })
         setMessage('')
     }
 
@@ -54,22 +52,22 @@ export default function Chats(props) {
         <div className='chats'>
             <div className="header">
                 <img src={arrow} alt="" onClick={() => { props.handleOpen() }} />
-                <img src={`${import.meta.env.VITE_SERVER_URL}`+'uploads/' + user.portada} alt="" />
+                <img src={`${import.meta.env.VITE_SERVER_URL}`+'uploads/' + user.portada} alt=""  className='img-portada'/>
                 <div>
                     <p>{user.name}</p>
                     <p>online</p>
                 </div>
             </div>
             <div className="messages-content">
-                {/* {
+                {
                     messages?.map((msg, key) => {
                         return <div className='msg-block' key={key}>
                             <p className={`messsge ${num === msg.user?.tel ? 'friend-msg' : 'user-msg'}`}>
-                                {msg.message}</p>
+                                {msg.data}</p>
                         </div>
                     })
                 }
-                <div ref={buttonRef} /> */}
+                <div ref={buttonRef} />
             </div>
             <div className="form-message">
                 <form className='form-chats' onSubmit={handleSubmit}>
