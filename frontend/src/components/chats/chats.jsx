@@ -15,18 +15,22 @@ export default function Chats(props) {
     const [message, setMessage] = useState("")
     const [messages, setMessages] = useState([])
     const [user, setUser] = useState([])
+
     let { num } = JSON.parse(localStorage.getItem('chat-session'))
 
     socket.on('server:messages', (msg) => {
-        console.log(msg);
         setMessages([...messages, msg])
+    })
+
+    socket.on('server:logged', (mg)=>{
+        console.log(mg);
+        // setOnline(mg)
     })
 
     // Get user Friends
     const getUser = async () => {
         const data = await userApi.getFriend(props.id)
         setUser(data)
-
     }
 
     useEffect(() => {
@@ -40,6 +44,7 @@ export default function Chats(props) {
 
     const handleChange = (e) => {
         setMessage(e.target.value)
+        setIsWriting(true)
     }
 
     const handleSubmit = (e) => {
@@ -55,7 +60,7 @@ export default function Chats(props) {
                 <img src={`${import.meta.env.VITE_SERVER_URL}`+'uploads/' + user.portada} alt=""  className='img-portada'/>
                 <div>
                     <p>{user.name}</p>
-                    <p>online</p>
+                    <p>{user.online ? 'online': 'offline'}</p>
                 </div>
             </div>
             <div className="messages-content">
@@ -63,7 +68,8 @@ export default function Chats(props) {
                     messages?.map((msg, key) => {
                         return <div className='msg-block' key={key}>
                             <p className={`messsge ${num === msg.user?.tel ? 'friend-msg' : 'user-msg'}`}>
-                                {msg.data}</p>
+                                {msg.data}
+                            </p>
                         </div>
                     })
                 }

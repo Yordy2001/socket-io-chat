@@ -7,7 +7,7 @@ const getFriend = async (req, res) => {
         const user = await UserModel.findOne({ tel: id })
         res.status(200).json(user)
     } catch (error) {
-        console.log(error);
+        res.send()
     }
 }
 
@@ -34,10 +34,9 @@ const getFriends = async (req, res) => {
 const addFriends = async (req, res) => {
 
     try {
-
         const { id } = req.session.user
         const { tel } = req.body
-        
+
         //Verify is user is register in the app 
         const friends = await UserModel.findOne({ tel })
         if (!friends) {
