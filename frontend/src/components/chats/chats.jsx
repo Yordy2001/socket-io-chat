@@ -44,7 +44,6 @@ export default function Chats(props) {
 
     const handleChange = (e) => {
         setMessage(e.target.value)
-        setIsWriting(true)
     }
 
     const handleSubmit = (e) => {
