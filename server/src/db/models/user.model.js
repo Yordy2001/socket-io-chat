@@ -23,7 +23,7 @@ const UserShema = new Schema(
         friends: {
             type: Array
         },
-        online: {
+        isActive: {
             type: Boolean
         }
     },
