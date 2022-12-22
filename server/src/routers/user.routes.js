@@ -1,6 +1,5 @@
 const express = require('express')
-const multer = require('multer')
-const upload = multer({dest: 'uploads/'})
+const upload = require('../utils/multer.config')
 const authMiddleware = require('../middleware/authenticate')
 
 const { register, login, logOut } = require('../controllers/auth.controllers')

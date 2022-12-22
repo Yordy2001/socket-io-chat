@@ -22,7 +22,7 @@ export default function Chats(props) {
         setMessages([...messages, msg])
     })
 
-    socket.on('server:logged', (mg)=>{
+    socket.on('server:logged', (mg) => {
         console.log(mg);
         // setOnline(mg)
     })
@@ -56,10 +56,10 @@ export default function Chats(props) {
         <div className='chats'>
             <div className="header">
                 <img src={arrow} alt="" onClick={() => { props.handleOpen() }} />
-                <img src={`${import.meta.env.VITE_SERVER_URL}`+'uploads/' + user.portada} alt=""  className='img-portada'/>
+                <img src={`${import.meta.env.VITE_SERVER_URL}` + 'uploads/' + user.portada} alt="" className='img-portada' />
                 <div>
                     <p>{user.name}</p>
-                    <p>{user.online ? 'online': 'offline'}</p>
+                    <p>{user.isActive ? 'online' : 'offline'}</p>
                 </div>
             </div>
             <div className="messages-content">

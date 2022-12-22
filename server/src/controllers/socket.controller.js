@@ -6,52 +6,60 @@ module.exports = (io, socket) => {
     let numero
 
     // Create User Room 
-    const loger =  async(num) => {
+    const handleConnect = async (num) => {
         socket.join(num)
         numero = num
 
-        let user = await UserModel.findOne({tel:num})
-        user.online = true
+        let user = await UserModel.findOne({ tel: num })
+        user.isActive = true
         await user.save()
+        return
+    }
+
+    const handleDiconnect = async (num) => {
+        let user = await UserModel.findOne({ tel: num })
+        console.log(user);
+        user.isActive = false
+        await user.save()
+        // socket.disconnect()
         return
     }
 
     // Get and post message
     const handleMessage = async (msg) => {
-        const { tel, message, userTel} = msg
+        const { tel, message, userTel } = msg
         try {
-            const user = await UserModel.findOne({tel})
+            const user = await UserModel.findOne({ tel })
             const mesagess = await MessageModel.find()
             io.to(tel).to(numero).emit("server:messages", { data: message, user: user })
 
         } catch (error) {
             console.log(error);
+
         }
     }
 
-    const setMessage = async (msg) => {
-        const { userTel, message, tel } = msg
+    const setMessage = async (payload) => {
+        const { userTel, message, tel } = payload
         try {
             await MessageModel.create({
                 message,
                 to: tel,
-                from:userTel
+                from: userTel
             })
         } catch (error) {
             console.log(error);
         }
     }
 
-    const chats = async (payload) => {
-        // try {
-        //     const user = await User.findAll()
-        //     io.emit("server:chats", user)
-        // } catch (error) {
-        //     console.log(error)
-        // }
+    const getMessage = async (payload) => {
+        const { userTel, message, tel } = payload
+        const messages = await MessageModel.find({ $or: [{ to: userTel, from: tel }] })
     }
 
-    socket.on('client:logged', loger)
+    socket.on('client:connect', handleConnect)
+
+    socket.on('disconnect', handleDiconnect)
     // socket.on("client:chats", chats)
-    socket.on("client:messages", handleMessage, setMessage)
+    socket.on("client:messages", setMessage, handleMessage)
 }
