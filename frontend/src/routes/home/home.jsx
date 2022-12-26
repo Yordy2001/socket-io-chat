@@ -55,7 +55,7 @@ export default function Home() {
                                                 key={each?.id}
                                                 onClick={() => setOpenChat({ open: true, chatId: each.tel })}
                                             >
-                                                <img src={`${import.meta.env.VITE_SERVER_URL}` + 'uploads/' + each?.portada}
+                                                <img src={`${each?.portada}`}
                                                  alt="user picture" />
 
                                                 <div className='chats-name-msg'>

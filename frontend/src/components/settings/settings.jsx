@@ -50,7 +50,6 @@ export default function Settings() {
             await auth.logOut()
             localStorage.setItem('chat-session', JSON.stringify(false))
             navigate('/login')
-            socket.emit('disconnect', 'dd')
         } catch (error) {
             console.log(error)
         }

@@ -11,9 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <SocketContext.Provider value={socket}>
-        <PrivateRouter>
           <App />
-        </PrivateRouter>
       </SocketContext.Provider>
     </BrowserRouter>
   </React.StrictMode>

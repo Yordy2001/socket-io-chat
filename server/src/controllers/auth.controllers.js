@@ -4,7 +4,7 @@ const UserModel = require('../db/models/user.model')
 const cloudinary = require('../utils/cloudinary.config')
 
 const register = async (req, res) => {
-    const { name, tel, info, password } = req.body
+    const { name, tel, info, password, isActive } = req.body
 
     try {
         const user = await UserModel.findOne({ tel });
@@ -13,7 +13,7 @@ const register = async (req, res) => {
             res.status(400).json({ msg: `Este numero esta registrado` })
         }
 
-        const cloudResult = await cloudinary.uploader.upload(req.file.path);
+        const cloudResult = await cloudinary.uploader.upload(req.file.path, {folder: 'hey'});
         const hashPassword = await bcript.hash(password, 12)
 
         await UserModel.create({
@@ -22,6 +22,7 @@ const register = async (req, res) => {
             password: hashPassword,
             portada: cloudResult.secure_url,
             info,
+            isActive,
             cloudinary_id: cloudResult.public_id
         })
 

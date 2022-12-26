@@ -7,6 +7,7 @@ import arrow from '../../assets/img/arrow_left.svg'
 import send from '../../assets/icon/icons8-send-25.png'
 
 const userApi = new friendsApi()
+let { num } = JSON.parse(localStorage.getItem('chat-session'))
 export default function Chats(props) {
 
     const buttonRef = useRef(null)
@@ -16,16 +17,6 @@ export default function Chats(props) {
     const [messages, setMessages] = useState([])
     const [user, setUser] = useState([])
 
-    let { num } = JSON.parse(localStorage.getItem('chat-session'))
-
-    socket.on('server:messages', (msg) => {
-        setMessages([...messages, msg])
-    })
-
-    socket.on('server:logged', (mg) => {
-        console.log(mg);
-        // setOnline(mg)
-    })
 
     // Get user Friends
     const getUser = async () => {
@@ -34,6 +25,7 @@ export default function Chats(props) {
     }
 
     useEffect(() => {
+        socket.emit('client-get-db-messages', { to: props.id, from: num })
         getUser()
     }, [])
 
@@ -42,32 +34,38 @@ export default function Chats(props) {
         buttonRef.current?.scrollIntoView({ behavior: 'smooth' })
     }, [messages])
 
+    // Get message from de db after join a chat
+    socket.on('server-db-messages', (msg) => {
+        setMessages(msg.data)
+    })
+
+
     const handleChange = (e) => {
         setMessage(e.target.value)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        socket.emit('client:messages', { message, tel: props.id, userTel: num })
+        socket.emit('client:message', { message, to: props.id, from: num })
+        socket.emit('client-get-db-messages', { to: props.id, from: num })
         setMessage('')
     }
-
     return (
         <div className='chats'>
             <div className="header">
                 <img src={arrow} alt="" onClick={() => { props.handleOpen() }} />
-                <img src={`${import.meta.env.VITE_SERVER_URL}` + 'uploads/' + user.portada} alt="" className='img-portada' />
+                {/* <img src={`${import.meta.env.VITE_SERVER_URL}` + 'uploads/' + user.portada} alt="" className='img-portada' /> */}
                 <div>
                     <p>{user.name}</p>
-                    <p>{user.isActive ? 'online' : 'offline'}</p>
+                    <p>{user.online ? 'online' : 'offline'}</p>
                 </div>
             </div>
             <div className="messages-content">
                 {
                     messages?.map((msg, key) => {
                         return <div className='msg-block' key={key}>
-                            <p className={`messsge ${num === msg.user?.tel ? 'friend-msg' : 'user-msg'}`}>
-                                {msg.data}
+                            <p className={`messsge ${num === msg.to ? 'friend-msg' : 'user-msg'}`}>
+                                {msg.message}
                             </p>
                         </div>
                     })

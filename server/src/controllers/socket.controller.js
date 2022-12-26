@@ -18,48 +18,46 @@ module.exports = (io, socket) => {
 
     const handleDiconnect = async (num) => {
         let user = await UserModel.findOne({ tel: num })
-        console.log(user);
-        user.isActive = false
+        // user.isActive = false
         await user.save()
         // socket.disconnect()
         return
     }
 
     // Get and post message
-    const handleMessage = async (msg) => {
-        const { tel, message, userTel } = msg
+    const handleMessage = async (payload) => {
+        const { to, from } = payload
         try {
-            const user = await UserModel.findOne({ tel })
-            const mesagess = await MessageModel.find()
-            io.to(tel).to(numero).emit("server:messages", { data: message, user: user })
-
+            let messages = await MessageModel.find({
+                $or: [
+                    { to: to, from },
+                    { to: from, from: to },
+                    { to: from }
+                ]
+            }).sort({ createdAt: "asc" })
+            io.to(to).to(numero).emit("server-db-messages", { data: messages })
         } catch (error) {
             console.log(error);
-
         }
     }
 
     const setMessage = async (payload) => {
-        const { userTel, message, tel } = payload
+        const { from, message, to } = payload
         try {
             await MessageModel.create({
                 message,
-                to: tel,
-                from: userTel
+                to,
+                from
             })
         } catch (error) {
             console.log(error);
         }
     }
 
-    const getMessage = async (payload) => {
-        const { userTel, message, tel } = payload
-        const messages = await MessageModel.find({ $or: [{ to: userTel, from: tel }] })
-    }
+    socket.on('connection', handleConnect)
 
-    socket.on('client:connect', handleConnect)
+    // socket.on('disconnect', handleDiconnect)
+    socket.on("client:message", setMessage)
 
-    socket.on('disconnect', handleDiconnect)
-    // socket.on("client:chats", chats)
-    socket.on("client:messages", setMessage, handleMessage)
+    socket.on("client-get-db-messages", handleMessage)
 }

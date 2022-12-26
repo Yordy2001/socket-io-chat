@@ -23,7 +23,7 @@ export default function Login() {
         onSubmit: async (values) => {
             try {
                 await auth.logIn(values)
-                socket.emit('client:logged', values.tel)
+                socket.emit('connection', values.tel)
                 localStorage.setItem('chat-session' , JSON.stringify({ auth:true, num:values.tel }))
                 navigate('/')
 
