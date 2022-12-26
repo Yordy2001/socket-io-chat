@@ -18,7 +18,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors:{
         withCredentials: true,
-        origin: 'http://localhost:3000',
+        origin: '*',
     }
 });
 
@@ -30,7 +30,7 @@ app.use('/uploads', express.static('uploads'))
 app.use(cookieParse())
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000' 
+    origin: '*' 
 }))
 app.use(cookieSession)
 
