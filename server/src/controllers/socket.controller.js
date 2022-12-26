@@ -6,52 +6,58 @@ module.exports = (io, socket) => {
     let numero
 
     // Create User Room 
-    const loger =  async(num) => {
+    const handleConnect = async (num) => {
         socket.join(num)
         numero = num
 
-        let user = await UserModel.findOne({tel:num})
-        user.online = true
+        let user = await UserModel.findOne({ tel: num })
+        user.isActive = true
         await user.save()
         return
     }
 
-    // Get and post message
-    const handleMessage = async (msg) => {
-        const { tel, message, userTel} = msg
-        try {
-            const user = await UserModel.findOne({tel})
-            const mesagess = await MessageModel.find()
-            io.to(tel).to(numero).emit("server:messages", { data: message, user: user })
+    const handleDiconnect = async (num) => {
+        let user = await UserModel.findOne({ tel: num })
+        // user.isActive = false
+        await user.save()
+        // socket.disconnect()
+        return
+    }
 
+    // Get and post message
+    const handleMessage = async (payload) => {
+        const { to, from } = payload
+        try {
+            let messages = await MessageModel.find({
+                $or: [
+                    { to: to, from },
+                    { to: from, from: to },
+                    { to: from }
+                ]
+            }).sort({ createdAt: "asc" })
+            io.to(to).to(numero).emit("server-db-messages", { data: messages })
         } catch (error) {
             console.log(error);
         }
     }
 
-    const setMessage = async (msg) => {
-        const { userTel, message, tel } = msg
+    const setMessage = async (payload) => {
+        const { from, message, to } = payload
         try {
             await MessageModel.create({
                 message,
-                to: tel,
-                from:userTel
+                to,
+                from
             })
         } catch (error) {
             console.log(error);
         }
     }
 
-    const chats = async (payload) => {
-        // try {
-        //     const user = await User.findAll()
-        //     io.emit("server:chats", user)
-        // } catch (error) {
-        //     console.log(error)
-        // }
-    }
+    socket.on('connection', handleConnect)
 
-    socket.on('client:logged', loger)
-    // socket.on("client:chats", chats)
-    socket.on("client:messages", handleMessage, setMessage)
+    // socket.on('disconnect', handleDiconnect)
+    socket.on("client:message", setMessage)
+
+    socket.on("client-get-db-messages", handleMessage)
 }

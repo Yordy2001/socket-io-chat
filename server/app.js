@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 4000;
 
 const {dbConnect} = require('./src/db/config/mongo')
 const cookieParse = require('cookie-parser')
-const cookieSession = require('../server/src/utils/cookie')
+const cookieSession = require('./src/utils/cookie.config')
 const router = require('../server/src/routers/user.routes');
 const chatController = require('./src/controllers/socket.controller')
 
@@ -18,7 +18,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors:{
         withCredentials: true,
-        origin: '*',
+        origin: 'http://localhost:3000',
     }
 });
 
@@ -30,7 +30,7 @@ app.use('/uploads', express.static('uploads'))
 app.use(cookieParse())
 app.use(cors({
     credentials: true,
-    origin: '*' 
+    origin: 'http://localhost:3000' 
 }))
 app.use(cookieSession)
 
@@ -47,7 +47,6 @@ dbConnect()
 io.on('connection', async (socket) => { 
     // message, chat controller
     chatController(io, socket)
-
 });
 
 server.listen(PORT, () => {

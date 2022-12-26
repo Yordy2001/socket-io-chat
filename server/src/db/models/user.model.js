@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose')
 
 const UserShema = new Schema(
     {
-        name:{
+        name: {
             type: String,
             require: true
         },
@@ -14,7 +14,7 @@ const UserShema = new Schema(
             type: String,
             require: true
         },
-        portada:{
+        portada: {
             type: String,
         },
         info: {
@@ -25,6 +25,9 @@ const UserShema = new Schema(
         },
         isActive: {
             type: Boolean
+        },
+        cloudinary_id: {
+            type: String
         }
     },
     {
@@ -35,4 +38,4 @@ const UserShema = new Schema(
 
 const UserModel = model("User", UserShema)
 
-module.exports =  UserModel ;
+module.exports = UserModel;
