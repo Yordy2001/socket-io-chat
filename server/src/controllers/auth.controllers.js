@@ -35,12 +35,11 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { tel, password } = req.body
-
         const user = await UserModel.findOne({ tel });
         const isMatch = await bcript.compare(password, user.password)
 
         if (!user || !isMatch) {
-            return res.sendStatus(400)
+            return res.status(400).json({ msg: `Bad request: revise si el usuario y la contraseña`})
         }
 
         req.session.isAuth = true
