@@ -1,7 +1,6 @@
 const UserModel = require('../db/models/user.model')
 const MessageModel = require('../db/models/message.models')
 
-
 module.exports = (io, socket) => {
     let numero
 
@@ -9,18 +8,16 @@ module.exports = (io, socket) => {
     const handleConnect = async (num) => {
         socket.join(num)
         numero = num
-
         let user = await UserModel.findOne({ tel: num })
         user.isActive = true
         await user.save()
         return
     }
 
-    const handleDiconnect = async (num) => {
-        let user = await UserModel.findOne({ tel: num })
-        // user.isActive = false
+    const handleDiconnect = async () => {
+        let user = await UserModel.findOne({ tel: numero })
+        user.isActive = false
         await user.save()
-        // socket.disconnect()
         return
     }
 
@@ -56,7 +53,7 @@ module.exports = (io, socket) => {
 
     socket.on('connection', handleConnect)
 
-    // socket.on('disconnect', handleDiconnect)
+    socket.on("logout", handleDiconnect)
     socket.on("client:message", setMessage)
 
     socket.on("client-get-db-messages", handleMessage)
