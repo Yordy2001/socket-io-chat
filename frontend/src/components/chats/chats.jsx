@@ -7,8 +7,8 @@ import arrow from '../../assets/img/arrow_left.svg'
 import send from '../../assets/icon/icons8-send-25.png'
 
 const userApi = new friendsApi()
-let { num } = JSON.parse(localStorage.getItem('chat-session'))
 export default function Chats(props) {
+    let { num } = JSON.parse(localStorage.getItem('chat-session'))
 
     const buttonRef = useRef(null)
     const socket = useContext(SocketContext)
@@ -54,10 +54,10 @@ export default function Chats(props) {
         <div className='chats'>
             <div className="header">
                 <img src={arrow} alt="" onClick={() => { props.handleOpen() }} />
-                {/* <img src={`${import.meta.env.VITE_SERVER_URL}` + 'uploads/' + user.portada} alt="" className='img-portada' /> */}
+                <img src={`${user.portada}` } alt="" className='img-portada' />
                 <div>
                     <p>{user.name}</p>
-                    <p>{user.online ? 'online' : 'offline'}</p>
+                    <p>{user.isActive ? 'online' : 'offline'}</p>
                 </div>
             </div>
             <div className="messages-content">

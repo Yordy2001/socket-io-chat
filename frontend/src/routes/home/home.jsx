@@ -18,15 +18,13 @@ export default function Home() {
     })
     const [chats, setChats] = useState([])
 
-    const getData = async ()=> {
+    const getData = async () => {
         const data = await userApi.getFriends()
         setChats(data)
     }
 
     useEffect(() => {
-        socket.emit('client:chats', openChat.chatId)
         getData()
-
     }, [socket])
 
     const handleChat = () => {
@@ -56,14 +54,14 @@ export default function Home() {
                                                 onClick={() => setOpenChat({ open: true, chatId: each.tel })}
                                             >
                                                 <img src={`${each?.portada}`}
-                                                 alt="user picture" />
+                                                    alt="user picture" />
 
                                                 <div className='chats-name-msg'>
                                                     <h3>{each?.name}</h3>
                                                 </div>
 
                                                 <div className='chats-content-right'>
-                                                    <p>8pm</p>
+                                                    <p>{each?.isActive ? "online" : "offline"}</p>
                                                 </div>
                                             </div>
                                         )
