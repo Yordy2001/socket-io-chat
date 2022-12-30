@@ -1,11 +1,11 @@
 FROM node:16.15.1
 
-WORKDIR /app
+WORKDIR /server
 
 COPY ["package.json" , "package-lock.json", "./"]
 
-RUN yarn install
+RUN npm ci
 
 COPY . .
 
-CMD [ "yarn ", "serve", "--host" ]
+CMD [ "npm ", "run", "dev" ]

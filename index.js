@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 4000;
 const {dbConnect} = require('./src/db/config/mongo')
 const cookieParse = require('cookie-parser')
 const cookieSession = require('./src/utils/cookie.config')
-const router = require('../server/src/routers/user.routes');
+const router = require('./src/routers/user.routes');
 const chatController = require('./src/controllers/socket.controller')
 
 //Server config 
