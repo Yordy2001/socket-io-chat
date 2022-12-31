@@ -27,7 +27,7 @@
 //         this.app.use(express.static('public'))
 //         this.app.use('/static', express.static('public'))
 //         this.app.use(cors({ origin: '*' }))
-//         this.app.use(cookieParse)  
+//         this.app.use(cookieParse)
 //         this.app.use(cookieSession)
 //     }
 // }

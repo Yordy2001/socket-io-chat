@@ -8,27 +8,26 @@ const inputPortada = document.getElementById('portada');
 const inputInfo = document.getElementById('info');
 
 const handleChange = (e) => {
-    const status = document.getElementsByClassName('status');
-    socket.emit(status.innerHTML = 'typing...')
-}
+  const status = document.getElementsByClassName('status');
+  socket.emit((status.innerHTML = 'typing...'));
+};
 
-inputName.addEventListener('change', handleChange)
-inputTel.addEventListener('change', handleChange)
-inputPortada.addEventListener('change', handleChange)
-inputInfo.addEventListener('change', handleChange)
-
+inputName.addEventListener('change', handleChange);
+inputTel.addEventListener('change', handleChange);
+inputPortada.addEventListener('change', handleChange);
+inputInfo.addEventListener('change', handleChange);
 
 form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    // if (input.value) {
-        socket.emit('client:register', {
-            name: inputName.value,
-            tel: inputTel.value,
-            portada: inputPortada.value,
-            info: inputInfo.value
-        });
-        // input.value = '';
-    // }
+  e.preventDefault();
+  // if (input.value) {
+  socket.emit('client:register', {
+    name: inputName.value,
+    tel: inputTel.value,
+    portada: inputPortada.value,
+    info: inputInfo.value,
+  });
+  // input.value = '';
+  // }
 });
 
 // socket.on('chat-message', function (msg) {
