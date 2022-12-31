@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const MessageShema = new Schema(
   {
@@ -8,12 +8,12 @@ const MessageShema = new Schema(
     },
     to: {
       type: String,
-      ref: 'User',
+      ref: "User",
       require: true,
     },
     from: {
       type: String,
-      ref: 'User',
+      ref: "User",
       require: true,
     },
   },
@@ -23,6 +23,6 @@ const MessageShema = new Schema(
   }
 );
 
-const MessageModel = model('Message', MessageShema);
+const MessageModel = model("Message", MessageShema);
 
 module.exports = MessageModel;

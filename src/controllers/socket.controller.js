@@ -1,5 +1,5 @@
-const UserModel = require('../db/models/user.model');
-const MessageModel = require('../db/models/message.models');
+const UserModel = require("../db/models/user.model");
+const MessageModel = require("../db/models/message.models");
 
 module.exports = (io, socket) => {
   let numero;
@@ -27,8 +27,8 @@ module.exports = (io, socket) => {
     try {
       let messages = await MessageModel.find({
         $or: [{ to: to, from }, { to: from, from: to }, { to: from }],
-      }).sort({ createdAt: 'asc' });
-      io.to(to).to(numero).emit('server-db-messages', { data: messages });
+      }).sort({ createdAt: "asc" });
+      io.to(to).to(numero).emit("server-db-messages", { data: messages });
     } catch (error) {
       console.log(error);
     }
@@ -47,10 +47,10 @@ module.exports = (io, socket) => {
     }
   };
 
-  socket.on('connection', handleConnect);
+  socket.on("connection", handleConnect);
 
-  socket.on('logout', handleDiconnect);
-  socket.on('client:message', setMessage);
+  socket.on("logout", handleDiconnect);
+  socket.on("client:message", setMessage);
 
-  socket.on('client-get-db-messages', handleMessage);
+  socket.on("client-get-db-messages", handleMessage);
 };

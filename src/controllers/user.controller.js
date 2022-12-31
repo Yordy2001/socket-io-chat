@@ -1,4 +1,4 @@
-const UserModel = require('../db/models/user.model');
+const UserModel = require("../db/models/user.model");
 
 const getFriend = async (req, res) => {
   try {
@@ -38,7 +38,7 @@ const addFriends = async (req, res) => {
     // Verify is user is register in the app
     const friends = await UserModel.findOne({ tel });
     if (!friends) {
-      return res.status(404).send({ msg: 'Usuario no encontrado' });
+      return res.status(404).send({ msg: "Usuario no encontrado" });
     }
 
     //Verify is user is already add
@@ -47,7 +47,7 @@ const addFriends = async (req, res) => {
       id: _id,
     });
     if (isFriends) {
-      return res.status(409).json({ msg: 'Este usuario ya esta agregado' });
+      return res.status(409).json({ msg: "Este usuario ya esta agregado" });
     }
 
     await UserModel.updateOne(
@@ -58,7 +58,7 @@ const addFriends = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json({ msg: 'Contacto agregado' });
+    res.status(200).json({ msg: "Contacto agregado" });
   } catch (error) {
     console.log(error);
   }

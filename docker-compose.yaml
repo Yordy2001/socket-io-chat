@@ -1,10 +1,10 @@
-version: '3'
+version: "3"
 
 services:
   db:
     image: mongo:5
     restart: always
-    container_name: hey-chat 
+    container_name: hey-chat
     ports:
       - 27017:27017
     environment:

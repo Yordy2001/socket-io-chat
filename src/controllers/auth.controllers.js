@@ -1,7 +1,7 @@
-const bcript = require('bcrypt');
-const UserModel = require('../db/models/user.model');
+const bcript = require("bcrypt");
+const UserModel = require("../db/models/user.model");
 
-const cloudinary = require('../utils/cloudinary.config');
+const cloudinary = require("../utils/cloudinary.config");
 
 const register = async (req, res) => {
   const { name, tel, info, password, isActive } = req.body;
@@ -14,7 +14,7 @@ const register = async (req, res) => {
     }
 
     const cloudResult = await cloudinary.uploader.upload(req.file.path, {
-      folder: 'hey',
+      folder: "hey",
     });
     const hashPassword = await bcript.hash(password, 12);
 
