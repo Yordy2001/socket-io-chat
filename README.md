@@ -1,5 +1,6 @@
-# Stack 
-- nodejs 
+# Stack
+
+- nodejs
 - expressjs
 - mongodb
 - docker-compose
@@ -7,6 +8,7 @@
 - cloudinary
 
 # Run Project
+
 Before you run this project you have to create a cloudinay account.
 
 ## Clone repository
@@ -20,8 +22,9 @@ Before you run this project you have to create a cloudinay account.
 ```bash
   npm install
 ```
+
 ## Run Docker-compose
+
 ```bash
   docker-compose up
 ```
-
