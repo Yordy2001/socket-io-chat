@@ -38,6 +38,7 @@ const login = async (req, res) => {
   try {
     const { tel, password } = req.body;
     const user = await UserModel.findOne({ tel });
+    console.log(user);
     const isMatch = await bcript.compare(password, user.password);
 
     if (!user || !isMatch) {
