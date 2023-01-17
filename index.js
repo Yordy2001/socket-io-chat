@@ -17,8 +17,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    withCredentials: true,
-    origin: "http://localhost:3000",
+    credentials: true,
+    origin: "http://127.0.0.1:3000",
   },
 });
 
@@ -27,13 +27,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/static", express.static("public"));
 app.use("/uploads", express.static("uploads"));
-app.use(cookieParse());
 app.use(
   cors({
     credentials: true,
-    origin: "http://localhost:3000",
+    origin: "http://127.0.0.1:3000",
   })
 );
+
+app.use(cookieParse());
 app.use(cookieSession);
 
 app.get("/", (req, res) => {
